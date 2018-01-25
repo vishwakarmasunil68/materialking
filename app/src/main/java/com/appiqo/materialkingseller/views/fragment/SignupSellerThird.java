@@ -60,6 +60,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -206,7 +207,6 @@ public class SignupSellerThird extends Fragment {
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-
             firmName = bundle.getString("firmName");
             contactName = bundle.getString("contactName");
             businessAddress = bundle.getString("businessAddress");
@@ -237,7 +237,6 @@ public class SignupSellerThird extends Fragment {
         etAttachPics.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 ImagePicker.with(getActivity())                         //  Initialize ImagePicker with activity or fragment context
                         .setToolbarColor("#212121")         //  Toolbar color
                         .setStatusBarColor("#000000")       //  StatusBar color (works with SDK >= 21  )
@@ -709,11 +708,11 @@ public class SignupSellerThird extends Fragment {
                 new Response.Listener<NetworkResponse>() {
                     @Override
                     public void onResponse(NetworkResponse response) {
-                        Log.e("get_signup_ird", String.valueOf(response));
+                        Log.e("get_signup_ird", new String(response.data));
 
                         progressView.hideLoader();
                         try {
-                            JSONObject mObject = new JSONObject(String.valueOf(response));
+                            JSONObject mObject = new JSONObject(new String(response.data));
                             String status = mObject.getString("status");
                             String message = mObject.getString("message");
                             if (status.equalsIgnoreCase("1")) {
@@ -734,36 +733,13 @@ public class SignupSellerThird extends Fragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
                         progressView.hideLoader();
-                        if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                            //  MyApplication.showError(getActivity(),getString(R.string.noConnection),getString(R.string.checkInternet));
-
-                            Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                        } else if (error instanceof AuthFailureError) {
-                            //TODO
-                            Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                            //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                        } else if (error instanceof ServerError) {
-                            //TODO
-                            Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                            // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                        } else if (error instanceof NetworkError) {
-                            //TODO
-                            Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                            // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-
-                        } else if (error instanceof ParseError) {
-                            //TODO
-                            Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                            //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                        }
+                        error.printStackTrace();
                     }
                 }) {
 
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("firm_name", firmName);
                 headers.put("contact_name", contactName);
@@ -794,15 +770,28 @@ public class SignupSellerThird extends Fragment {
             @Override
             protected Map<String, DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
-                /*long imagename = System.currentTimeMillis();
-                File attach=new File(SignupHandler.ATTACHPIC);
-                File bill=new File(SignupHandler.BILLPICTURE);
-                params.put("pic", new DataPart("attach" + ".png", attach));*/
+                long imagename = System.currentTimeMillis();
+                Bitmap bitmap1 = null;
+                Bitmap bitmap2 = null;
+                try {
+                    bitmap1 = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(),Uri.fromFile(new File(SignupHandler.ATTACHPIC)));
+                    bitmap2 = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), Uri.fromFile(new File(SignupHandler.BILLPICTURE)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                params.put("userfile1", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap1)));
+                params.put("userfile2", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap2)));
                 return params;
             }
         };
 
         Volley.newRequestQueue(MyApplication.getInstance()).add(volleyMultipartRequest);
+    }
+
+    public byte[] getFileDataFromDrawable(Bitmap bitmap) {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 80, byteArrayOutputStream);
+        return byteArrayOutputStream.toByteArray();
     }
 
 

@@ -4,10 +4,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 
 import com.appiqo.materialkingseller.R;
@@ -24,18 +24,12 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-
         if (!MyApplication.readStringPref(PrefsData.PREF_TOKEN).equalsIgnoreCase("")) {
-
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-
-
                     Log.e("FCM", MyApplication.readStringPref(PrefsData.PREF_TOKEN));
-
                     if (MyApplication.readBooleanPref(PrefsData.PREF_LOGINSTATUS)) {
-
                         Intent intent = new Intent(SplashActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
@@ -44,29 +38,21 @@ public class SplashActivity extends AppCompatActivity {
                         startActivity(intent);
                         finish();
                     }
-
-
                 }
-            }, 3000);
+            }, 2000);
         }
-
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-
-                // checking for type intent filter
                 if (intent.getAction().equals(Config.REGISTRATION_COMPLETE)) {
-                    // gcm successfully registered
                     Log.e("FIREBASE", "I am received");
                     Intent intent1 = new Intent(SplashActivity.this, SignupHandler.class);
                     startActivity(intent1);
                     finish();
-
                 }
             }
         };
-
 
 
     }
@@ -74,11 +60,7 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
-        // register GCM registration complete receiver
-        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(Config.REGISTRATION_COMPLETE));
-
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver, new IntentFilter(Config.REGISTRATION_COMPLETE));
     }
 
     @Override
@@ -86,7 +68,6 @@ public class SplashActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onStop();
     }
-
 
 
 }

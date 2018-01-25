@@ -40,14 +40,7 @@ public class SignupHandler extends AppCompatActivity {
         setContentView(R.layout.activity_signup_handler);
         Fabric.with(this, new Crashlytics());
         ButterKnife.bind(this);
-
-
         LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver, new IntentFilter("tokenReceiver"));
-
-
-
-
-
         changeFragment(new SignupSellerFirst(), "signupfirst");
 
     }
@@ -66,11 +59,9 @@ public class SignupHandler extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String token = intent.getStringExtra("token");
-            if(token != null)
-            {
-                MyApplication.writeStringPref(PrefsData.PREF_TOKEN,token);
+            if (token != null) {
+                MyApplication.writeStringPref(PrefsData.PREF_TOKEN, token);
             }
-
         }
     };
 

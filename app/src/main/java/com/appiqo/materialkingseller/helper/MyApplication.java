@@ -23,6 +23,7 @@ import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
 
 import io.fabric.sdk.android.Fabric;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -34,6 +35,7 @@ public class MyApplication extends Application {
     public static String SHARED_PREFERENCES_NAME = "shared_myfore_seller";
 
     private RequestQueue mRequestQueue;
+
     public static void hideKeyboard(Context ctx) {
         InputMethodManager inputManager = (InputMethodManager) ctx
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -46,45 +48,37 @@ public class MyApplication extends Application {
         inputManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
-
-
     @SuppressWarnings("deprecation")
-    public static void setSystemLocaleLegacy(Configuration config, Locale locale){
+    public static void setSystemLocaleLegacy(Configuration config, Locale locale) {
         config.locale = locale;
     }
 
     @TargetApi(Build.VERSION_CODES.N)
-    public static void setSystemLocale(Configuration config, Locale locale){
+    public static void setSystemLocale(Configuration config, Locale locale) {
         config.setLocale(locale);
     }
 
-    public static void setLanguage(Context context, String languageCode){
+    public static void setLanguage(Context context, String languageCode) {
         Locale locale = new Locale(languageCode);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             setSystemLocale(config, locale);
-        }else{
+        } else {
             setSystemLocaleLegacy(config, locale);
         }
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             context.getApplicationContext().createConfigurationContext(config);
         } else {
             context.getApplicationContext().getResources().updateConfiguration(config,
                     context.getResources().getDisplayMetrics());
         }
-
-
     }
-
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);
-
     }
 
     @Override
@@ -92,8 +86,6 @@ public class MyApplication extends Application {
         super.onCreate();
         Fabric.with(this, new Crashlytics());
         mInstance = this;
-
-
     }
 
     public static synchronized MyApplication getInstance() {
@@ -104,9 +96,9 @@ public class MyApplication extends Application {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(getApplicationContext());
         }
-
         return mRequestQueue;
     }
+
     public <T> void addToRequestQueue(Request<T> req, String tag) {
         req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
         getRequestQueue().add(req);
@@ -123,8 +115,7 @@ public class MyApplication extends Application {
         }
     }
 
-
-    public static boolean isMyServiceRunning(Class<?> serviceClass,Context mContext) {
+    public static boolean isMyServiceRunning(Class<?> serviceClass, Context mContext) {
         ActivityManager manager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
@@ -133,9 +124,6 @@ public class MyApplication extends Application {
         }
         return false;
     }
-
-
-
 
     public static void buildAlertMessageNoGps(final Context mContext) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -159,78 +147,47 @@ public class MyApplication extends Application {
         alert.show();
     }
 
-
-
-
-
-    public static void  clearPref()
-    {
+    public static void clearPref() {
         SharedPreferences prefs = mInstance.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = prefs.edit();
         edit.clear();
         edit.commit();
 
-
     }
 
-
-
-    public static void  clearKeyPref(String key)
-    {
+    public static void clearKeyPref(String key) {
         SharedPreferences prefs = mInstance.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = prefs.edit();
         edit.remove(key);
         edit.commit();
-
-
     }
 
-    public static String  readStringPref(String key)
-    {
+    public static String readStringPref(String key) {
         SharedPreferences prefs = mInstance.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-
-        return prefs.getString(key,"");
-
-
-
+        return prefs.getString(key, "");
     }
 
-    public static void  writeStringPref(String key, String data)
-    {
+    public static void writeStringPref(String key, String data) {
         SharedPreferences prefs = mInstance.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-
         SharedPreferences.Editor edit = prefs.edit();
-        edit.putString(key,data);
+        edit.putString(key, data);
+        edit.commit();
+    }
+
+    public static boolean readBooleanPref(String key) {
+        SharedPreferences prefs = mInstance.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        return prefs.getBoolean(key, false);
+    }
+
+    public static void writeBooleanPref(String key, boolean data) {
+        SharedPreferences prefs = mInstance.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.putBoolean(key, data);
         edit.commit();
 
     }
 
-
-
-    public static boolean  readBooleanPref(String key)
-    {
-        SharedPreferences prefs = mInstance.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-
-        return prefs.getBoolean(key,false);
-
-
-
-    }
-
-    public static void  writeBooleanPref(String key, boolean data)
-    {
-        SharedPreferences prefs = mInstance.getSharedPreferences(SHARED_PREFERENCES_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.putBoolean(key,data);
-        edit.commit();
-
-    }
-
-
-
-    public static void showError(final Context context, String title, String message)
-    {
-
+    public static void showError(final Context context, String title, String message) {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
@@ -241,13 +198,8 @@ public class MyApplication extends Application {
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        // continue with delete
-
-
-                        if(!((Activity)context).isFinishing())
+                        if (!((Activity) context).isFinishing())
                             dialog.dismiss();
-
-
                     }
                 })
                 /*.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -256,32 +208,15 @@ public class MyApplication extends Application {
                     }
                 })*/
                 .setIcon(android.R.drawable.ic_dialog_alert);
-
-        if(!((Activity)context).isFinishing())
+        if (!((Activity) context).isFinishing())
             builder.show();
-
-
     }
 
-
-
-
-    public static String countDates(String firstDate)
-    {
-
-
-        if(firstDate.equalsIgnoreCase("null"))
-        {
-
+    public static String countDates(String firstDate) {
+        if (firstDate.equalsIgnoreCase("null")) {
             return "NA";
-
-
-        }
-        else
-        {
-            // Create a DateFormatter object for displaying date in specified format.
+        } else {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd hh:mm:ss");
-            // Create a calendar object that will convert the date and time value in milliseconds to date.
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(Long.parseLong(firstDate));
             return formatter.format(calendar.getTime());
@@ -289,50 +224,30 @@ public class MyApplication extends Application {
 
     }
 
-
-    public static int getCurrentHour()
-    {
+    public static int getCurrentHour() {
         Calendar cSchedStartCal = Calendar.getInstance();
         return cSchedStartCal.get(Calendar.HOUR_OF_DAY);
-
     }
 
-
-
-
-    public static int getCurrentMinute()
-    {
+    public static int getCurrentMinute() {
         Calendar cSchedStartCal = Calendar.getInstance();
         return cSchedStartCal.get(Calendar.MINUTE);
-
     }
-
 
     public static String getCurrentDate() {
-
-
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
-
         SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd");
         String formattedDate = df.format(c.getTime());
-
-        return  formattedDate;
-
+        return formattedDate;
     }
 
-
     public static String getCurrentDateTime() {
-
-
         Calendar c = Calendar.getInstance();
         System.out.println("Current time => " + c.getTime());
-
         SimpleDateFormat df = new SimpleDateFormat("yyyy.MM.dd hh:m:s");
         String formattedDate = df.format(c.getTime());
-
-        return  formattedDate;
-
+        return formattedDate;
     }
 
 }
