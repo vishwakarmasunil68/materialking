@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -26,6 +29,8 @@ import com.appiqo.materialkingseller.helper.MyApplication;
 import com.appiqo.materialkingseller.helper.ProgressView;
 import com.appiqo.materialkingseller.helper.Validation;
 import com.appiqo.materialkingseller.helper.WebApis;
+import com.klinker.android.link_builder.Link;
+import com.klinker.android.link_builder.LinkBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,12 +49,14 @@ public class LoginActivity extends AppCompatActivity {
     AppCompatEditText etLoginPassword;
     @BindView(R.id.btn_email_continue)
     AppCompatButton btnEmailContinue;
-
+    @BindView(R.id.tv_email_signup)
+    AppCompatTextView tvEmailSignup;
     ProgressView progressView;
 
     String Email, password;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,47 @@ public class LoginActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
+
+        etLoginPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent event) {
+
+                final int DRAWABLE_RIGHT = 2;
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (event.getRawX() >= (etLoginPassword.getRight() - etLoginPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        if (etLoginPassword.getInputType() == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) {
+                            etLoginPassword.setInputType(InputType.TYPE_CLASS_TEXT |
+                                    InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            etLoginPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.eye, 0);
+                            etLoginPassword.setSelection(etLoginPassword.getText().length());
+                        } else {
+                            etLoginPassword.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                            etLoginPassword.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.eye_line, 0);
+
+                        }
+                        return true;
+                    }
+                }
+
+
+                return false;
+            }
+        });
+
+        Link signin = new Link("Sign up")
+                .setTextColor(getResources().getColor(R.color.colorPrimary))
+                .setTextColorOfHighlightedLink(getResources().getColor(R.color.colorPrimary))
+                .setHighlightAlpha(.4f)
+                .setUnderlined(false)
+                .setBold(false).setOnClickListener(new Link.OnClickListener() {
+                    @Override
+                    public void onClick(String clickedText) {
+                        startActivity(new Intent(LoginActivity.this, SignupHandler.class));
+                    }
+                });
+        LinkBuilder.on(tvEmailSignup).addLink(signin).build();
+
+
         btnEmailContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,17 +118,15 @@ public class LoginActivity extends AppCompatActivity {
                 Email = etLoginEmail.getText().toString();
                 password = etLoginPassword.getText().toString();
 
-                if (Validation.emailValidator(Email) || Validation.mobileValidator(Email)){
-                    if (Validation.passValidator(password)){
+                if (Validation.emailValidator(Email) || Validation.mobileValidator(Email)) {
+                    if (Validation.passValidator(password)) {
                         connectApi();
-                    }else{
+                    } else {
                         Toast.makeText(LoginActivity.this, "Password must contain minimum 6 characters", Toast.LENGTH_SHORT).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(LoginActivity.this, "Please enter the EmailId or Mobile number in correct format", Toast.LENGTH_SHORT).show();
                 }
-
-
 
 
             }

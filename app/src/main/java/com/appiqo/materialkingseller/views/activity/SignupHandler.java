@@ -42,7 +42,6 @@ public class SignupHandler extends AppCompatActivity {
         ButterKnife.bind(this);
         LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver, new IntentFilter("tokenReceiver"));
         changeFragment(new SignupSellerFirst(), "signupfirst");
-
     }
 
 
@@ -94,6 +93,5 @@ public class SignupHandler extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.signup_seller_container);
         fragment.onActivityResult(requestCode, resultCode, data);
-
     }
 }
