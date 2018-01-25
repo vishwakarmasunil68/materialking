@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/toolbar_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_15">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_annual_turnover"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Annual turnover"
+                    android:inputType="numberDecimal"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_specialities"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Specialities"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_certification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Certification/Awards:"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:weightSum="1.0">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".50"
+                    android:theme="@style/TextLabel">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/et_attach_pics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:fontFamily="sans-serif"
+                        android:hint="Attach Pics"
+                        android:inputType="text"
+                        android:textSize="@dimen/sp_18" />
+                </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".50"
+                    android:gravity="center">
+                    <ImageView
+                        android:id="@+id/iv_attach_pic"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/default_selected_image"
+                        android:scaleType="fitXY" />
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Categories/Product"
+                android:textColor="@color/colorGrey"
+                android:layout_marginTop="@dimen/dp_10"/>
+            <!--<android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_categories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Categories/Product"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>-->
+
+            <com.appiqo.materialkingseller.helper.MultiSelectionSpinner
+                android:id="@+id/multispinner_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"/>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_subcategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sub Category"
+                android:textColor="@color/colorGrey"
+                android:layout_marginTop="@dimen/dp_10"
+                android:visibility="gone"/>
+
+
+            <com.appiqo.materialkingseller.helper.MultiSelectionSpinner
+                android:id="@+id/multispinner_subcategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:visibility="gone"/>
+
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_gst_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="GST Number"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                app:mrl_rippleAlpha="0.2"
+                app:mrl_rippleColor="@color/colorPrimaryDark"
+                app:mrl_rippleDelayClick="true"
+                app:mrl_rippleHover="true"
+                app:mrl_rippleOverlay="true">
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_signup_seller_third_continue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:fontFamily="sans-serif"
+                    android:text="SIgn up"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorWhite" />
+            </com.balysv.materialripple.MaterialRippleLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

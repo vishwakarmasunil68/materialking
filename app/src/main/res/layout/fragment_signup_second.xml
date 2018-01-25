@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_15">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Firm/Company Name"
+                    android:inputType="textEmailAddress"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_contact_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Contact Name"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:fontFamily="sans-serif"
+                    android:hint="Business Address"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_telephone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Telephone"
+                    android:inputType="number"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/tv_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_15"
+                    android:fontFamily="sans-serif"
+                    android:hint="State"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:weightSum="1.0">
+
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".60"
+                    android:theme="@style/TextLabel">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/tv_city"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:hint="City"
+                        android:inputType="text"
+                        android:textSize="@dimen/sp_18" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_20"
+                    android:layout_weight=".35"
+                    android:theme="@style/TextLabel">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/et_pincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:hint="Pin Code"
+                        android:inputType="text"
+                        android:textSize="@dimen/sp_18" />
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Area"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_cities_to_serve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_check_black_24dp"
+                    android:fontFamily="sans-serif"
+                    android:focusable="false"
+                    android:hint="Cities to serve"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+
+            <com.appiqo.materialkingseller.helper.AdjustableLayout
+                android:id="@+id/container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+
+            </com.appiqo.materialkingseller.helper.AdjustableLayout>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                android:text="Business Type"
+                android:textColor="@color/colorGrey" />
+
+            <com.appiqo.materialkingseller.helper.MultiSelectionSpinner
+                android:id="@+id/multiselectionspinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_05" />
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_registration_no"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Business Registration no."
+                    android:inputType="number"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/TextLabel"
+                android:layout_marginTop="@dimen/dp_10">
+
+                <android.support.v7.widget.AppCompatEditText
+                    android:id="@+id/et_quantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:hint="Min. Order Value/Quantity:"
+                    android:inputType="number"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:orientation="horizontal"
+                android:weightSum="1.0">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".60"
+                    android:theme="@style/TextLabel">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/et_bill_picture"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:fontFamily="sans-serif"
+                        android:hint="Latest Bill Picture"
+                        android:inputType="text"
+                        android:textSize="@dimen/sp_18" />
+                </android.support.design.widget.TextInputLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight=".40">
+                    <ImageView
+                        android:id="@+id/iv_selected_bill"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitXY"
+                        android:layout_gravity="center"
+                        android:src="@drawable/default_selected_image"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <com.balysv.materialripple.MaterialRippleLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_15"
+                app:mrl_rippleAlpha="0.2"
+                app:mrl_rippleColor="@color/colorPrimaryDark"
+                app:mrl_rippleDelayClick="true"
+                app:mrl_rippleHover="true"
+                app:mrl_rippleOverlay="true">
+
+                <android.support.v7.widget.AppCompatButton
+                    android:id="@+id/btn_signup_seller_second_continue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:fontFamily="sans-serif"
+                    android:text="CONTINUE"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colorWhite" />
+            </com.balysv.materialripple.MaterialRippleLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
