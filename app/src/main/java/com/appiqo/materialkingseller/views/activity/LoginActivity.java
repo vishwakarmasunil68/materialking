@@ -8,38 +8,23 @@ import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.appiqo.materialkingseller.ApiServices.ApiClient;
+import com.appiqo.materialkingseller.ApiServices.ApiInterface;
+import com.appiqo.materialkingseller.ApiServices.ApiResponse;
 import com.appiqo.materialkingseller.R;
-import com.appiqo.materialkingseller.helper.MyApplication;
 import com.appiqo.materialkingseller.helper.ProgressView;
 import com.appiqo.materialkingseller.helper.Validation;
-import com.appiqo.materialkingseller.helper.WebApis;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -138,91 +123,25 @@ public class LoginActivity extends AppCompatActivity {
         progressView = new ProgressView(LoginActivity.this);
         progressView.showLoader();
 
-        MyApplication.getInstance().cancelPendingRequests("getList");
-
-        StringRequest jsonObjReq = new StringRequest(Request.Method.POST,
-                WebApis.Login, new Response.Listener<String>() {
-
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ApiResponse> call = apiInterface.login(Email, password);
+        call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(String response) {
-
-                Log.e("get_signup_ird", response);
-
+            public void onResponse(Call<ApiResponse> call, retrofit2.Response<ApiResponse> response) {
                 progressView.hideLoader();
-                try {
-                    JSONObject mObject = new JSONObject(response);
-                    String status = mObject.getString("status");
-                    String message = mObject.getString("message");
-                    if (status.equalsIgnoreCase("1")) {
-                        Toast.makeText(LoginActivity.this, "Sucess", Toast.LENGTH_SHORT).show();
-
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-                    } else {
-                        Toast.makeText(LoginActivity.this, message, 5000).show();
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (response.body().getStatus() == 1) {
+                    Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                } else {
+                    Toast.makeText(LoginActivity.this, response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-
             }
-        }, new Response.ErrorListener() {
-
             @Override
-            public void onErrorResponse(VolleyError error) {
-
-
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
                 progressView.hideLoader();
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    //  MyApplication.showError(getActivity(),getString(R.string.noConnection),getString(R.string.checkInternet));
-
-                    Toast.makeText(LoginActivity.this, "Please Check your Internet Connection", 5000).show();
-                } else if (error instanceof AuthFailureError) {
-                    //TODO
-                    Toast.makeText(LoginActivity.this, "Please Check your Internet Connection", 5000).show();
-                    //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                } else if (error instanceof ServerError) {
-                    //TODO
-                    Toast.makeText(LoginActivity.this, "Please Check your Internet Connection", 5000).show();
-                    // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                } else if (error instanceof NetworkError) {
-                    //TODO
-                    Toast.makeText(LoginActivity.this, "Please Check your Internet Connection", 5000).show();
-                    // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-
-                } else if (error instanceof ParseError) {
-                    //TODO
-                    Toast.makeText(LoginActivity.this, "Please Check your Internet Connection", 5000).show();
-                    //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                }
-
+                t.printStackTrace();
             }
-        }) {
-
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getParams() {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("email", Email);
-                headers.put("password", password);
-
-                Log.e("POST DATA", headers.toString());
-
-
-                return headers;
-            }
-
-        };
-
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(500000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MyApplication.getInstance().addToRequestQueue(jsonObjReq, "getList");
-
+        });
     }
 
 

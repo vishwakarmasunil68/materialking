@@ -9,7 +9,7 @@
         android:id="@+id/iv_back_arrow"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:src="@drawable/ic_back_arrow_blue"/>
+        app:srcCompat="@drawable/ic_back_arrow_blue"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
