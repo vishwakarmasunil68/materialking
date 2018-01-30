@@ -74,6 +74,22 @@
                 android:theme="@style/TextLabel">
 
                 <android.support.v7.widget.AppCompatEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:fontFamily="sans-serif"
+                    android:hint="Street Address/Landmark"
+                    android:inputType="text"
+                    android:textSize="@dimen/sp_18" />
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_10"
+                android:theme="@style/TextLabel">
+
+                <android.support.v7.widget.AppCompatEditText
                     android:id="@+id/et_telephone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

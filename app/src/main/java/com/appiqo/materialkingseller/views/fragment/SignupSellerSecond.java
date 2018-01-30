@@ -47,6 +47,7 @@ import com.appiqo.materialkingseller.helper.MultiSelectionSpinner;
 import com.appiqo.materialkingseller.helper.MyApplication;
 import com.appiqo.materialkingseller.helper.ProgressView;
 import com.appiqo.materialkingseller.helper.Validation;
+import com.appiqo.materialkingseller.views.activity.SelectCityActivity;
 import com.appiqo.materialkingseller.views.activity.SignupHandler;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -144,6 +145,9 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
     private AdjustableLayout adjustableLayout;
     ProgressView progressView;
     String businessString = "";
+
+    Intent intent;
+    public final int REQUEST_CODE_FOR_CITIES=1001;
 
 
     @Nullable
@@ -417,14 +421,19 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
                 }
                 break;
             case R.id.et_cities_to_serve:
-                PlacePicker.IntentBuilder citiesbbuilder = new PlacePicker.IntentBuilder();
+
+                intent=new Intent(getActivity(), SelectCityActivity.class);
+                startActivityForResult(intent,REQUEST_CODE_FOR_CITIES);
+
+
+                /*PlacePicker.IntentBuilder citiesbbuilder = new PlacePicker.IntentBuilder();
                 try {
                     getActivity().startActivityForResult(citiesbbuilder.build(getActivity()), CITIES_TO_SERVE_REQUEST);
                 } catch (GooglePlayServicesRepairableException e) {
                     e.printStackTrace();
                 } catch (GooglePlayServicesNotAvailableException e) {
                     e.printStackTrace();
-                }
+                }*/
         }
     }
 

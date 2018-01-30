@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".helper.MyApplication"
@@ -17,7 +19,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="icon">
-        <activity android:name=".views.activity.SplashActivity">
+        <activity
+            android:name=".views.activity.SplashActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -43,9 +48,19 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".views.activity.MainActivity" />
-        <activity android:name=".views.activity.LoginActivity" />
-        <activity android:name=".views.activity.SignupHandler"></activity>
+        <activity
+            android:name=".views.activity.MainActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.activity.LoginActivity"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".views.activity.SignupHandler"
+            android:resizeableActivity="false"
+            android:screenOrientation="portrait" />
+        <activity android:name=".views.activity.SelectCityActivity"></activity>
     </application>
 
 </manifest>
