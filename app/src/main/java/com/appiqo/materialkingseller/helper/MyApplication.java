@@ -13,20 +13,16 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.support.multidex.MultiDex;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
-
-import io.fabric.sdk.android.Fabric;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import io.fabric.sdk.android.Fabric;
 
 
 public class MyApplication extends Application {
@@ -34,7 +30,6 @@ public class MyApplication extends Application {
     private static MyApplication mInstance;
     public static String SHARED_PREFERENCES_NAME = "shared_myfore_seller";
 
-    private RequestQueue mRequestQueue;
 
     public static void hideKeyboard(Context ctx) {
         InputMethodManager inputManager = (InputMethodManager) ctx
@@ -92,28 +87,7 @@ public class MyApplication extends Application {
         return mInstance;
     }
 
-    public RequestQueue getRequestQueue() {
-        if (mRequestQueue == null) {
-            mRequestQueue = Volley.newRequestQueue(getApplicationContext());
-        }
-        return mRequestQueue;
-    }
 
-    public <T> void addToRequestQueue(Request<T> req, String tag) {
-        req.setTag(TextUtils.isEmpty(tag) ? TAG : tag);
-        getRequestQueue().add(req);
-    }
-
-    public <T> void addToRequestQueue(Request<T> req) {
-        req.setTag(TAG);
-        getRequestQueue().add(req);
-    }
-
-    public void cancelPendingRequests(Object tag) {
-        if (mRequestQueue != null) {
-            mRequestQueue.cancelAll(tag);
-        }
-    }
 
     public static boolean isMyServiceRunning(Class<?> serviceClass, Context mContext) {
         ActivityManager manager = (ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);

@@ -7,41 +7,27 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.appiqo.materialkingseller.ApiServices.ApiClient;
+import com.appiqo.materialkingseller.ApiServices.ApiInterface;
+import com.appiqo.materialkingseller.ApiServices.ApiResponse;
 import com.appiqo.materialkingseller.R;
 import com.appiqo.materialkingseller.helper.MyApplication;
 import com.appiqo.materialkingseller.helper.PrefsData;
 import com.appiqo.materialkingseller.helper.ProgressView;
-import com.appiqo.materialkingseller.helper.WebApis;
 import com.appiqo.materialkingseller.views.activity.SignupHandler;
 import com.chaos.view.PinView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * Created by Hp on 1/19/2018.
@@ -57,18 +43,16 @@ public class SignupSellerOtp extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.text)
     AppCompatTextView text;
-
+    ApiInterface apiInterface;
+    ProgressView progressView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_signup_otp, container, false);
         unbinder = ButterKnife.bind(this, view);
-
         initialize();
-
-        text.setText("Please Enter The Password \nsent to "+MyApplication.readStringPref(PrefsData.PREF_MOBILE));
-
+        text.setText("Please Enter The Password \nsent to " + MyApplication.readStringPref(PrefsData.PREF_MOBILE));
         backArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,118 +62,49 @@ public class SignupSellerOtp extends Fragment {
         btnOtpSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (!pinView.getText().toString().isEmpty()) {
                     getRegistertinoData(pinView.getText().toString());
                 }
-
             }
         });
-
         tvResendOtp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDialogForConfirmation();
             }
         });
-
         return view;
     }
 
     private void resendOtpConnectApi() {
-
-        final ProgressView progressView = new ProgressView(getActivity());
         progressView.showLoader();
-
-        MyApplication.getInstance().cancelPendingRequests("getList");
-        StringRequest jsonObjReq = new StringRequest(Request.Method.POST,
-                WebApis.RESENDOTP, new Response.Listener<String>() {
-
+        Call<ApiResponse> call = apiInterface.resend_otp(MyApplication.readStringPref(PrefsData.PREF_MOBILE));
+        call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(String response) {
-
-                Log.e("get_signup_ird", response);
-
+            public void onResponse(Call<ApiResponse> call, retrofit2.Response<ApiResponse> response) {
                 progressView.hideLoader();
-                try {
-                    JSONObject mObject = new JSONObject(response);
-                    String status = mObject.getString("status");
-                    String message = mObject.getString("message");
-                    if (status.equalsIgnoreCase("1")) {
-                        Toast.makeText(getActivity(), "Otp Resend Successfully", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(getActivity(), message, Toast.LENGTH_SHORT).show();
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (response.body().getStatus() == 1) {
+                    Toast.makeText(getActivity(), "Otp Resend Successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-
             }
-        }, new Response.ErrorListener() {
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
                 progressView.hideLoader();
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    //  MyApplication.showError(getActivity(),getString(R.string.noConnection),getString(R.string.checkInternet));
-
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                } else if (error instanceof AuthFailureError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                    //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                } else if (error instanceof ServerError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                    // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                } else if (error instanceof NetworkError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                    // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-
-                } else if (error instanceof ParseError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", Toast.LENGTH_SHORT).show();
-                    //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                }
-
+                t.printStackTrace();
             }
-        }) {
-
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getParams() {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("mobile", MyApplication.readStringPref(PrefsData.PREF_MOBILE));
-                Log.e("POST DATA", headers.toString());
-
-                return headers;
-            }
-
-        };
-
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(500000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MyApplication.getInstance().addToRequestQueue(jsonObjReq, "getList");
-
-
+        });
     }
 
     private void openDialogForConfirmation() {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_confirm_otp);
-        AppCompatTextView gotIt,dialogText;
+        AppCompatTextView gotIt, dialogText;
         gotIt = dialog.findViewById(R.id.tv_dialog_got_it);
-        dialogText=dialog.findViewById(R.id.dialog_text);
-        dialogText.setText("OTP resend to the mobile number "+MyApplication.readStringPref(PrefsData.PREF_MOBILE)+" successfully please the enter the following code to authenticate as a valid user");
+        dialogText = dialog.findViewById(R.id.dialog_text);
+        dialogText.setText("OTP resend to the mobile number " + MyApplication.readStringPref(PrefsData.PREF_MOBILE) + " successfully please the enter the following code to authenticate as a valid user");
         gotIt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,106 +118,33 @@ public class SignupSellerOtp extends Fragment {
 
 
     private void getRegistertinoData(final String otp) {
-        final ProgressView progressView = new ProgressView(getActivity());
         progressView.showLoader();
-
-        MyApplication.getInstance().cancelPendingRequests("getList");
-        StringRequest jsonObjReq = new StringRequest(Request.Method.POST,
-                WebApis.CONFIRMOTP, new Response.Listener<String>() {
-
+        Call<ApiResponse> call = apiInterface.authenticate_otp(MyApplication.readStringPref(PrefsData.PREF_USERID),otp);
+        call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(String response) {
-
-                Log.e("get_signup_ird", response);
-
+            public void onResponse(Call<ApiResponse> call, retrofit2.Response<ApiResponse> response) {
                 progressView.hideLoader();
-                //  verifyOtp();
-                try {
-                    JSONObject mObject = new JSONObject(response);
-                    String status = mObject.getString("status");
-                    String message = mObject.getString("message");
-                    if (status.equalsIgnoreCase("1")) {
-                        Toast.makeText(getActivity(), "Sucess", Toast.LENGTH_SHORT).show();
-
-                        //
-                        /*String id = mObject.getString("id");
-
-                        MyApplication.writeStringPref(PrefsData.PREF_USERID,id);
-                        MyApplication.writeStringPref(PrefsData.PREF_MOBILE,mobile);*/
-
-
-                        ((SignupHandler) getActivity()).changeFragment(new SignupSellerSecond(), "signupsecond");
-                        getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-
-                    } else {
-                        Toast.makeText(getActivity(), message, 5000).show();
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                if (response.body().getStatus() == 1) {
+                    //MyApplication.writeStringPref(PrefsData.PREF_MOBILE,"");
+                    ((SignupHandler) getActivity()).changeFragment(new SignupSellerSecond(), "signupsecond");
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
+                } else {
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-
             }
-        }, new Response.ErrorListener() {
 
             @Override
-            public void onErrorResponse(VolleyError error) {
-
-
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
                 progressView.hideLoader();
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    //  MyApplication.showError(getActivity(),getString(R.string.noConnection),getString(R.string.checkInternet));
-
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                } else if (error instanceof AuthFailureError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                    //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                } else if (error instanceof ServerError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                    // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                } else if (error instanceof NetworkError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                    // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-
-                } else if (error instanceof ParseError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                    //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                }
-
+                t.printStackTrace();
             }
-        }) {
-
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getParams() {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("id", MyApplication.readStringPref(PrefsData.PREF_USERID));
-                headers.put("otp", otp);
-                Log.e("POST DATA", headers.toString());
-
-
-                return headers;
-            }
-
-        };
-
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(500000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MyApplication.getInstance().addToRequestQueue(jsonObjReq, "getList");
-
+        });
 
     }
 
     private void initialize() {
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        progressView = new ProgressView(getActivity());
         backArrow = view.findViewById(R.id.iv_back_arrow);
         btnOtpSubmit = view.findViewById(R.id.btn_otp_submit);
         pinView = view.findViewById(R.id.otp_view);

@@ -19,37 +19,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.NetworkError;
-import com.android.volley.NoConnectionError;
-import com.android.volley.ParseError;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.ServerError;
-import com.android.volley.TimeoutError;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
+import com.appiqo.materialkingseller.ApiServices.ApiClient;
+import com.appiqo.materialkingseller.ApiServices.ApiInterface;
+import com.appiqo.materialkingseller.ApiServices.ApiResponse;
 import com.appiqo.materialkingseller.R;
 import com.appiqo.materialkingseller.helper.MyApplication;
 import com.appiqo.materialkingseller.helper.PrefsData;
 import com.appiqo.materialkingseller.helper.ProgressView;
 import com.appiqo.materialkingseller.helper.Validation;
-import com.appiqo.materialkingseller.helper.WebApis;
 import com.appiqo.materialkingseller.views.activity.LoginActivity;
 import com.appiqo.materialkingseller.views.activity.SignupHandler;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
 
 /**
  * Created by Hp on 1/19/2018.
@@ -60,10 +47,8 @@ public class SignupSellerFirst extends Fragment {
     Toolbar toolbar;
     AppCompatButton btnContinue;
     AppCompatTextView tvTermsAndCondition, Signin;
-
     @BindView(R.id.tv_emial_signup)
     AppCompatEditText etEmialSignup;
-
     @BindView(R.id.et_password)
     AppCompatEditText etPassword;
     @BindView(R.id.confirm_password)
@@ -71,12 +56,12 @@ public class SignupSellerFirst extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.mobileNumber)
     AppCompatEditText etmobileNumber;
-
     String email, mobile, pass, repass;
 
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -195,9 +180,9 @@ public class SignupSellerFirst extends Fragment {
                 if (Validation.emailValidator(email)) {
                     if (Validation.mobileValidator(mobile)) {
                         if (Validation.passValidator(pass)) {
-                            if (Validation.confirmPassValidator(pass,repass)){
-                                getRegistertinData(email, mobile, pass);
-                            }else{
+                            if (Validation.confirmPassValidator(pass, repass)) {
+                                createUser(email, mobile, pass);
+                            } else {
                                 Toast.makeText(getActivity(), "Password does not match", Toast.LENGTH_SHORT).show();
                             }
                         } else {
@@ -218,103 +203,35 @@ public class SignupSellerFirst extends Fragment {
 
     }
 
-    private void getRegistertinData(final String Email, final String mobile, final String password) {
+    private void createUser(final String Email, final String mobile, final String password) {
         final ProgressView progressView = new ProgressView(getActivity());
         progressView.showLoader();
 
-        MyApplication.getInstance().cancelPendingRequests("getList");
-        StringRequest jsonObjReq = new StringRequest(Request.Method.POST,
-                WebApis.PRIMARYSIGNUP, new Response.Listener<String>() {
-
+        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        Call<ApiResponse> call = apiInterface.create_user(Email, mobile, password);
+        call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(String response) {
-                Log.e("get_signup_ird", response);
+            public void onResponse(Call<ApiResponse> call, retrofit2.Response<ApiResponse> response) {
                 progressView.hideLoader();
+                if (response.body().getStatus() == 1) {
 
-                try {
-                    JSONObject mObject = new JSONObject(response);
-                    String status = mObject.getString("status");
-                    String message = mObject.getString("message");
-                    if (status.equalsIgnoreCase("1")) {
-                        Toast.makeText(getActivity(), "Sucess", Toast.LENGTH_SHORT).show();
+                    MyApplication.writeStringPref(PrefsData.PREF_USERID, response.body().getId());
 
-                        //
-                        String id = mObject.getString("id");
+                    MyApplication.writeStringPref(PrefsData.PREF_MOBILE, mobile);
+                    ((SignupHandler) getActivity()).changeFragment(new SignupSellerOtp(), "signupOTP");
+                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
 
-                        MyApplication.writeStringPref(PrefsData.PREF_USERID, id);
-                        MyApplication.writeStringPref(PrefsData.PREF_MOBILE, mobile);
-
-
-                        ((SignupHandler) getActivity()).changeFragment(new SignupSellerOtp(), "signupOTP");
-                        getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
-
-                    } else {
-                        progressView.hideLoader();
-                        Toast.makeText(getActivity(), message, 5000).show();
-                    }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                } else {
+                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
-
             }
-        }, new Response.ErrorListener() {
 
             @Override
-            public void onErrorResponse(VolleyError error) {
+            public void onFailure(Call<ApiResponse> call, Throwable t) {
                 progressView.hideLoader();
-                if (error instanceof TimeoutError || error instanceof NoConnectionError) {
-                    //  MyApplication.showError(getActivity(),getString(R.string.noConnection),getString(R.string.checkInternet));
-
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                } else if (error instanceof AuthFailureError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                    //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                } else if (error instanceof ServerError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                    // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                } else if (error instanceof NetworkError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                    // MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-
-                } else if (error instanceof ParseError) {
-                    //TODO
-                    Toast.makeText(getActivity(), "Please Check your Internet Connection", 5000).show();
-                    //MyApplication.showError(getActivity(),getString(R.string.error),getString(R.string.tryAfterSomeTime));
-                }
-
+                t.printStackTrace();
             }
-        }) {
-
-            /**
-             * Passing some request headers
-             * */
-            @Override
-            public Map<String, String> getParams() {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("email", Email);
-                headers.put("mobile", mobile);
-                headers.put("password", password);
-
-                Log.e("POST DATA", headers.toString());
-
-
-                return headers;
-            }
-
-        };
-
-        jsonObjReq.setRetryPolicy(new DefaultRetryPolicy(500000,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
-        MyApplication.getInstance().addToRequestQueue(jsonObjReq, "getList");
-
-
+        });
     }
 
     private void initialize() {
@@ -323,7 +240,6 @@ public class SignupSellerFirst extends Fragment {
         tvTermsAndCondition = view.findViewById(R.id.tv_conditions);
         Signin = view.findViewById(R.id.tv_email_signin);
     }
-
 
     @Override
     public void onDestroyView() {

@@ -6,13 +6,27 @@
 
 
 
-    <com.cunoraz.gifview.library.GifView
-        android:id="@+id/gif1"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:text="Loading"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:layout_above="@+id/dot_progress_bar"
+        android:layout_alignParentStart="true" />
+    <com.github.silvestrpredko.dotprogressbar.DotProgressBar
+        android:id="@+id/dot_progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        custom:amount="3"
         android:layout_centerInParent="true"
-        android:visibility="visible"
-        custom:gif="@drawable/loader" />
+        custom:duration="@android:integer/config_mediumAnimTime"
+        custom:endColor="@color/white"
+        custom:startColor="@color/colorPrimary"
+        custom:animationDirection="right"/>
+
 
 
 </RelativeLayout>

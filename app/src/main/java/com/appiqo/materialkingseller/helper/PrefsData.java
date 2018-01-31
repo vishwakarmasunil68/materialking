@@ -5,7 +5,6 @@ package com.appiqo.materialkingseller.helper;
  */
 
 public class PrefsData {
-
     public static String PREF_USERID = "pref_userId";
     public static String PREF_MOBILE = "pref_mobile";
     public static String PREF_TOKEN = "pref_token";

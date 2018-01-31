@@ -28,11 +28,9 @@ public class SignupHandler extends AppCompatActivity {
 
     public static String BILLPICTURE = "";
     public static String ATTACHPIC = "";
-
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
