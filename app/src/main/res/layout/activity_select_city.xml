@@ -14,7 +14,7 @@
         android:layout_height="?android:attr/actionBarSize"
         app:tabGravity="fill"
         style="@style/MyTabLayout"
-        app:tabMode="scrollable"
+        app:tabMode="fixed"
         android:background="@color/colorPrimary"
         app:tabTextColor="@color/colorWhite"
         app:tabSelectedTextColor="@color/colorWhite"

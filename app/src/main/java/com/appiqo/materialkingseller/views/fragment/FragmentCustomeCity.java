@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.appiqo.materialkingseller.R;
-import com.appiqo.materialkingseller.views.activity.SelectCityActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,11 +29,6 @@ public class FragmentCustomeCity extends Fragment {
     AppCompatEditText etMauallyFillCity;
     @BindView(R.id.btn_city_continue)
     AppCompatButton btnCityContinue;
-
-    String city;
-
-    Intent intent;
-
     Unbinder unbinder;
 
 
@@ -48,11 +42,12 @@ public class FragmentCustomeCity extends Fragment {
         btnCityContinue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!city.equalsIgnoreCase(" ")){
-                    city=etMauallyFillCity.getText().toString().trim();
-                    intent=new Intent();
-                    intent.putExtra("",city);
-                }else {
+                if (!etMauallyFillCity.getText().toString().equalsIgnoreCase(" ")) {
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("city", etMauallyFillCity.getText().toString());
+                    getActivity().setResult(Activity.RESULT_OK, returnIntent);
+                    getActivity().finish();
+                } else {
                     Toast.makeText(getActivity(), "Please fill the city", Toast.LENGTH_SHORT).show();
                 }
             }

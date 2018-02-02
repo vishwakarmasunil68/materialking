@@ -16,10 +16,12 @@ import java.util.List;
  */
 
 public class MultiSelectionSpinner extends android.support.v7.widget.AppCompatSpinner implements DialogInterface.OnMultiChoiceClickListener {
-    public interface OnMultipleItemsSelectedListener{
+    public interface OnMultipleItemsSelectedListener {
         void selectedIndices(List<Integer> indices);
+
         void selectedStrings(List<String> strings);
     }
+
     private OnMultipleItemsSelectedListener listener;
 
     String[] _items = null;
@@ -46,13 +48,13 @@ public class MultiSelectionSpinner extends android.support.v7.widget.AppCompatSp
         super.setAdapter(simple_adapter);
     }
 
-    public void setListener(OnMultipleItemsSelectedListener listener){
+    public void setListener(OnMultipleItemsSelectedListener listener) {
         this.listener = listener;
     }
 
     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
         if (mSelection != null && which < mSelection.length) {
-            if(hasNone) {
+            if (hasNone) {
                 if (which == 0 && isChecked && mSelection.length > 1) {
                     for (int i = 1; i < mSelection.length; i++) {
                         mSelection[i] = false;
@@ -88,8 +90,8 @@ public class MultiSelectionSpinner extends android.support.v7.widget.AppCompatSp
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 System.arraycopy(mSelection, 0, mSelectionAtStart, 0, mSelection.length);
-                listener.selectedIndices(getSelectedIndices());
-                listener.selectedStrings(getSelectedStrings());
+                // listener.selectedIndices(getSelectedIndices());
+                //listener.selectedStrings(getSelectedStrings());
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -124,7 +126,7 @@ public class MultiSelectionSpinner extends android.support.v7.widget.AppCompatSp
     public void setItems(List<String> items) {
         _items = items.toArray(new String[items.size()]);
         mSelection = new boolean[_items.length];
-        mSelectionAtStart  = new boolean[_items.length];
+        mSelectionAtStart = new boolean[_items.length];
         simple_adapter.clear();
         simple_adapter.add(_items[0]);
         Arrays.fill(mSelection, false);
@@ -253,7 +255,7 @@ public class MultiSelectionSpinner extends android.support.v7.widget.AppCompatSp
         return sb.toString();
     }
 
-    public void hasNoneOption(boolean val){
+    public void hasNoneOption(boolean val) {
         hasNone = val;
     }
 }

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
-    <include layout="@layout/toolbar_layout"/>
-
     <ImageView
-        android:id="@+id/iv_clock"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
@@ -21,9 +18,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="65dp"
+        android:fontFamily="sans-serif"
         android:gravity="center"
         android:padding="@dimen/dp_20"
-        android:fontFamily="sans-serif"
         android:text="We have received your application, \na member of our team will be in  touch shortly!"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/sp_17"
@@ -32,20 +29,24 @@
     <com.balysv.materialripple.MaterialRippleLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:mrl_rippleOverlay="true"
-        app:mrl_rippleColor="@color/colorPrimaryDark"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="30dp"
         app:mrl_rippleAlpha="0.2"
+        app:mrl_rippleColor="@color/colorPrimaryDark"
         app:mrl_rippleDelayClick="true"
         app:mrl_rippleHover="true"
-        android:layout_gravity="bottom|center"
-        android:layout_marginBottom="30dp">
+        app:mrl_rippleOverlay="true">
+
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_signup_seller_fourth_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="sans-serif"
             android:background="@color/colorPrimary"
-            android:text="Home"
+            android:fontFamily="sans-serif"
+            android:paddingLeft="@dimen/dp_20"
+            android:paddingRight="@dimen/dp_20"
+            android:text="Go To Home"
+            android:textAllCaps="false"
             android:textColor="@color/colorWhite" />
     </com.balysv.materialripple.MaterialRippleLayout>
 

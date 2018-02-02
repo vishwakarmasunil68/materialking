@@ -5,26 +5,27 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.appiqo.materialkingseller.ApiServices.ApiClient;
 import com.appiqo.materialkingseller.ApiServices.ApiInterface;
 import com.appiqo.materialkingseller.ApiServices.ApiResponse;
 import com.appiqo.materialkingseller.R;
-import com.appiqo.materialkingseller.helper.MultiSelectionSpinner;
+import com.appiqo.materialkingseller.helper.IconTreeItemHolder;
 import com.appiqo.materialkingseller.helper.MyApplication;
 import com.appiqo.materialkingseller.helper.PrefsData;
 import com.appiqo.materialkingseller.helper.ProgressView;
+import com.appiqo.materialkingseller.helper.SelectableHeaderHolder;
+import com.appiqo.materialkingseller.helper.SelectableItemHolder;
 import com.appiqo.materialkingseller.helper.Utils;
 import com.appiqo.materialkingseller.helper.Validation;
 import com.appiqo.materialkingseller.model.CategoryBean;
@@ -33,22 +34,25 @@ import com.bumptech.glide.Glide;
 import com.nguyenhoanglam.imagepicker.model.Config;
 import com.nguyenhoanglam.imagepicker.model.Image;
 import com.nguyenhoanglam.imagepicker.ui.imagepicker.ImagePicker;
+import com.unnamed.b.atv.model.TreeNode;
+import com.unnamed.b.atv.view.AndroidTreeView;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -58,9 +62,15 @@ import static android.app.Activity.RESULT_OK;
 
 public class SignupSellerThird extends Fragment {
     View view;
+    String annualTurnover, specialities, certification, categories, gstNumber, firmName, contactName, businessAddress, telephone, state, city, pincode, area, citiesToServe, businessTpye, BusinessRegistrationNo, Quantity;
+    ProgressView progressView;
+    List<CategoryBean.ResultBean> resultBeans;
+    List<CategoryBean.ResultBean.SubBean> subBeans;
+    ApiInterface apiInterface;
+    Unbinder unbinder;
+    AndroidTreeView tView;
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    AppCompatButton btnContinue;
-    String firmName, contactName, businessAddress, telephone, state, city, pincode, area, citiesToServe, businessTpye, BusinessRegistrationNo, Quantity;
     @BindView(R.id.et_annual_turnover)
     AppCompatEditText etAnnualTurnover;
     @BindView(R.id.et_specialities)
@@ -69,24 +79,14 @@ public class SignupSellerThird extends Fragment {
     AppCompatEditText etCertification;
     @BindView(R.id.et_attach_pics)
     AppCompatEditText etAttachPics;
-    @BindView(R.id.et_gst_number)
-    AppCompatEditText etGstNumber;
     @BindView(R.id.iv_attach_pic)
     ImageView ivAttachPic;
-    @BindView(R.id.multispinner_category)
-    MultiSelectionSpinner multispinnerCategory;
-    @BindView(R.id.tv_subcategory)
-    AppCompatTextView tvSubcategory;
-    @BindView(R.id.multispinner_subcategory)
-    MultiSelectionSpinner multispinnerSubcategory;
+    @BindView(R.id.container)
+    RelativeLayout container;
+    @BindView(R.id.et_gst_number)
+    AppCompatEditText etGstNumber;
     @BindView(R.id.btn_signup_seller_third_continue)
     AppCompatButton btnSignupSellerThirdContinue;
-    String annualTurnover, specialities, certification, categories, gstNumber;
-    ProgressView progressView;
-    List<CategoryBean.ResultBean> resultBeans;
-    List<CategoryBean.ResultBean.SubBean> subBeans;
-    ApiInterface apiInterface;
-    Unbinder unbinder;
 
 
     @Nullable
@@ -94,59 +94,12 @@ public class SignupSellerThird extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_signup_third, container, false);
         unbinder = ButterKnife.bind(this, view);
-        initialize();
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Extras");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("4/4");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
+        progressView = new ProgressView(getActivity());
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
+        resultBeans = new ArrayList<>();
+        subBeans = new ArrayList<>();
+        ((SignupHandler) getActivity()).setupToolbar("Extras", "4/4", true);
         getCategoryFromApi();
-        multispinnerCategory.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
-            @Override
-            public void selectedIndices(List<Integer> indices) {
-                Log.e("selected", indices.toString());
-                if (!(indices.size() < 0)) {
-                    tvSubcategory.setVisibility(View.VISIBLE);
-                    multispinnerSubcategory.setVisibility(View.VISIBLE);
-                    List<String> sub = new ArrayList<>();
-                    sub.clear();
-                    subBeans.clear();
-                    for (int i = 0; i < indices.size(); i++) {
-                        subBeans.addAll(resultBeans.get(indices.get(i)).getSub());
-                    }
-                    for (int i = 0; i < subBeans.size(); i++) {
-                        sub.add(subBeans.get(i).getName());
-                    }
-
-                    if (sub.size() > 0) {
-                        multispinnerSubcategory.setItems(sub);
-                    } else {
-                        tvSubcategory.setVisibility(View.GONE);
-                        multispinnerSubcategory.setVisibility(View.GONE);
-                        Toast.makeText(getActivity(), "This Category does not have any sub category", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getActivity(), "Please select the category to continue", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void selectedStrings(List<String> strings) {
-
-            }
-        });
-
-        multispinnerSubcategory.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
-            @Override
-            public void selectedIndices(List<Integer> indices) {
-            }
-
-            @Override
-            public void selectedStrings(List<String> strings) {
-
-            }
-        });
-
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             firmName = bundle.getString("firmName");
@@ -163,32 +116,11 @@ public class SignupSellerThird extends Fragment {
             Quantity = bundle.getString("Quantity");
         }
 
-        etAttachPics.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imagePicker();
-            }
-        });
-
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                annualTurnover = etAnnualTurnover.getText().toString();
-                specialities = etSpecialities.getText().toString();
-                certification = etCertification.getText().toString();
-                gstNumber = etGstNumber.getText().toString();
-                if (Validation.nameValidator(annualTurnover) || Validation.nameValidator(specialities) || Validation.nameValidator(gstNumber)) {
-                    userRegister();
-                } else {
-                    Toast.makeText(getActivity(), "Please fill all the data", Toast.LENGTH_SHORT);
-                }
-            }
-        });
         return view;
     }
 
     private void imagePicker() {
-        ImagePicker.with(getActivity())
+        ImagePicker.with(this)
                 .setToolbarColor("#212121")
                 .setStatusBarColor("#000000")
                 .setToolbarTextColor("#FFFFFF")
@@ -211,17 +143,31 @@ public class SignupSellerThird extends Fragment {
         Call<CategoryBean> call = apiInterface.get_categories();
         call.enqueue(new Callback<CategoryBean>() {
             @Override
-            public void onResponse(Call<CategoryBean> call, retrofit2.Response<CategoryBean> response) {
+            public void onResponse(Call<CategoryBean> call, Response<CategoryBean> response) {
                 progressView.hideLoader();
                 CategoryBean categoryBean = response.body();
                 if (categoryBean.getStatus() == 1) {
                     resultBeans.clear();
                     resultBeans.addAll(categoryBean.getResult());
-                    String[] main = new String[resultBeans.size()];
-                    for (int i = 0; i < resultBeans.size(); i++) {
-                        main[i] = resultBeans.get(i).getName();
+                    for (CategoryBean.ResultBean resultBean : resultBeans) {
+                        subBeans.addAll(resultBean.getSub());
                     }
-                    multispinnerCategory.setItems(main);
+                    TreeNode root = TreeNode.root();
+                    for (int i = 0; i < resultBeans.size(); i++) {
+                        TreeNode main = new TreeNode(new IconTreeItemHolder.IconTreeItem(resultBeans.get(i).getName())).setViewHolder(new SelectableHeaderHolder(getActivity()));
+                        main.setSelectable(true);
+                        for (int i1 = 0; i1 < resultBeans.get(i).getSub().size(); i1++) {
+                            TreeNode sub = new TreeNode(resultBeans.get(i).getSub().get(i1).getName()).setViewHolder(new SelectableItemHolder(getActivity()));
+                            sub.setSelectable(true);
+                            main.addChildren(sub);
+                        }
+                        root.addChildren(main);
+                    }
+                    tView = new AndroidTreeView(getActivity(), root);
+                    tView.setDefaultAnimation(true);
+                    tView.setSelectionModeEnabled(true);
+                    container.addView(tView.getView());
+
                 } else {
                     Toast.makeText(getActivity(), categoryBean.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -235,24 +181,9 @@ public class SignupSellerThird extends Fragment {
         });
     }
 
-    private void initialize() {
-        toolbar = view.findViewById(R.id.toolbar);
-        btnContinue = view.findViewById(R.id.btn_signup_seller_third_continue);
-        progressView = new ProgressView(getActivity());
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        resultBeans = new ArrayList<>();
-        subBeans = new ArrayList<>();
-    }
 
     private void userRegister() {
         progressView.showLoader();
-
-        String[] ids = new String[subBeans.size()];
-        for (int i = 0; i < subBeans.size(); i++) {
-            ids[i] = subBeans.get(i).getId();
-        }
-        categories = Arrays.toString(ids).replace("[", "").replace("]", "");
-        Log.e("categories", categories);
         Map<String, RequestBody> headers = new HashMap<>();
         headers.put("firm_name", RequestBody.create(MediaType.parse("text/plain"), firmName));
         headers.put("contact_name", RequestBody.create(MediaType.parse("text/plain"), contactName));
@@ -275,12 +206,6 @@ public class SignupSellerThird extends Fragment {
         headers.put("deviceType", RequestBody.create(MediaType.parse("text/plain"), "android"));
         headers.put("id", RequestBody.create(MediaType.parse("text/plain"), MyApplication.readStringPref(PrefsData.PREF_USERID)));
 
-        Log.e("para,s",headers.toString());
-
-        Log.e("para,s",firmName+"||"+contactName+"||"+businessAddress+"||"+telephone+"||"+state+"||"+city+"||"+pincode+"||"+area+"||"+citiesToServe+"||"+businessTpye+"||"+BusinessRegistrationNo+"||"+Quantity+"||"+annualTurnover+"||"+specialities+"||"+certification+"||"+
-        categories+"||"+gstNumber+"||"+MyApplication.readStringPref(PrefsData.PREF_TOKEN)+"||"+MyApplication.readStringPref(PrefsData.PREF_USERID));
-        Log.e("id",MyApplication.readStringPref(PrefsData.PREF_USERID));
-
 
         File attachPic = Utils.compressFile(getActivity(), new File(SignupHandler.ATTACHPIC));
         File billPic = Utils.compressFile(getActivity(), new File(SignupHandler.BILLPICTURE));
@@ -293,7 +218,7 @@ public class SignupSellerThird extends Fragment {
 
         call.enqueue(new Callback<ApiResponse>() {
             @Override
-            public void onResponse(Call<ApiResponse> call, retrofit2.Response<ApiResponse> response) {
+            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 progressView.hideLoader();
                 if (response.body().getStatus() == 1) {
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -331,5 +256,53 @@ public class SignupSellerThird extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick({R.id.et_attach_pics, R.id.btn_signup_seller_third_continue})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.et_attach_pics:
+                imagePicker();
+                break;
+            case R.id.btn_signup_seller_third_continue:
+                annualTurnover = etAnnualTurnover.getText().toString();
+                specialities = etSpecialities.getText().toString();
+                certification = etCertification.getText().toString();
+                gstNumber = etGstNumber.getText().toString();
+
+                List<TreeNode> treeNodes = tView.getSelected();
+                ArrayList<String> sub = new ArrayList<>();
+                ArrayList<String> ids = new ArrayList<>();
+                for (int i = 0; i < treeNodes.size(); i++) {
+                    sub.add(treeNodes.get(i).getValue().toString());
+                }
+                for (int i = 0; i < subBeans.size(); i++) {
+                    if (sub.contains(subBeans.get(i).getName())) {
+                        ids.add(subBeans.get(i).getId());
+                    }
+                }
+                categories = ids.toString().replace("[", "").replace("]", "");
+
+                if (Validation.nullValidator(annualTurnover)) {
+                    etAnnualTurnover.setError("Enter Annual Turnover");
+                    etAnnualTurnover.requestFocus();
+                } else if (Validation.nullValidator(specialities)) {
+                    etSpecialities.setError("Enter Specialities");
+                    etSpecialities.requestFocus();
+                } else if (Validation.nullValidator(certification)) {
+                    etCertification.setError("Enter Certification");
+                    etCertification.requestFocus();
+                } else if (Validation.nullValidator(SignupHandler.ATTACHPIC)) {
+                    Toast.makeText(getActivity(), "Please Attach Picture", Toast.LENGTH_SHORT).show();
+                } else if (Validation.nullValidator(categories)) {
+                    Toast.makeText(getActivity(), "Please Select Categories", Toast.LENGTH_SHORT).show();
+                } else if (Validation.nullValidator(gstNumber)) {
+                    etGstNumber.setError("Enter GST Number");
+                    etGstNumber.requestFocus();
+                } else {
+                    userRegister();
+                }
+                break;
+        }
     }
 }

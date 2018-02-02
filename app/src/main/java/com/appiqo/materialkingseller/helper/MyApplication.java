@@ -31,6 +31,7 @@ public class MyApplication extends Application {
     public static String SHARED_PREFERENCES_NAME = "shared_myfore_seller";
 
 
+
     public static void hideKeyboard(Context ctx) {
         InputMethodManager inputManager = (InputMethodManager) ctx
                 .getSystemService(Context.INPUT_METHOD_SERVICE);

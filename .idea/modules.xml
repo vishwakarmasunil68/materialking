@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://E:\Appiqo Bitbucket\materialking\MaterialKingSeller.iml" filepath="E:\Appiqo Bitbucket\materialking\MaterialKingSeller.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/materialking.iml" filepath="$PROJECT_DIR$/materialking.iml" />
-      <module fileurl="file://D:\android studio projects\MaterialKingSeller\materialking.iml" filepath="D:\android studio projects\MaterialKingSeller\materialking.iml" />
     </modules>
   </component>
 </project>

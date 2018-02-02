@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
+import android.support.v7.widget.Toolbar;
 
 import com.appiqo.materialkingseller.R;
 import com.appiqo.materialkingseller.helper.MyApplication;
@@ -18,28 +19,30 @@ import com.appiqo.materialkingseller.views.fragment.SignupSellerFourth;
 import com.appiqo.materialkingseller.views.fragment.SignupSellerOtp;
 import com.appiqo.materialkingseller.views.fragment.SignupSellerSecond;
 import com.appiqo.materialkingseller.views.fragment.SignupSellerThird;
-import com.crashlytics.android.Crashlytics;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
-import io.fabric.sdk.android.Fabric;
 
 public class SignupHandler extends AppCompatActivity {
 
-
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     public static String BILLPICTURE = "";
     public static String ATTACHPIC = "";
+
     static {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_handler);
-        Fabric.with(this, new Crashlytics());
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
         LocalBroadcastManager.getInstance(this).registerReceiver(tokenReceiver, new IntentFilter("tokenReceiver"));
-        changeFragment(new SignupSellerFirst(), "signupfirst");
+        changeFragment(new SignupSellerFirst(), "BasicFragment");
     }
 
 
@@ -80,16 +83,17 @@ public class SignupHandler extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.signup_seller_container);
-        fragment.onActivityResult(requestCode, resultCode, data);
+    public void setupToolbar(String title, String subTitle, Boolean hasBackpress) {
+        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setSubtitle(subTitle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(hasBackpress);
+        getSupportActionBar().setHomeButtonEnabled(hasBackpress);
     }
+
 }

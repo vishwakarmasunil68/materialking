@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_layout"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/dp_30"
         android:layout_marginEnd="@dimen/dp_30"
+        android:layout_marginStart="@dimen/dp_30"
         android:layout_marginTop="@dimen/dp_30">
 
         <LinearLayout
@@ -21,115 +20,114 @@
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/TextLabel">
+                android:layout_height="wrap_content">
+
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/tv_emial_signup"
+                    android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
                     android:hint="EMAIL"
-                    android:fontFamily="sans-serif"
                     android:inputType="textEmailAddress"
-                    android:textSize="@dimen/sp_18"/>
+                    android:textSize="@dimen/sp_18" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
                 android:layout_marginTop="@dimen/dp_10">
+
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/mobileNumber"
+                    android:id="@+id/etMobileNumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
                     android:hint="MOBILE NUMBER"
-                    android:maxLength="10"
-                    android:fontFamily="sans-serif"
                     android:inputType="number"
-                    android:textSize="@dimen/sp_18"/>
+                    android:maxLength="10"
+                    android:textSize="@dimen/sp_18" />
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginTop="@dimen/dp_10"
+                app:passwordToggleEnabled="true">
+
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/et_password"
+                    android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
                     android:hint="PASSWORD"
-                    android:fontFamily="sans-serif"
                     android:inputType="textPassword"
-                    android:textSize="@dimen/sp_18"
-                    android:drawableEnd="@drawable/eye" />
+                    android:textSize="@dimen/sp_18" />
             </android.support.design.widget.TextInputLayout>
-
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/TextLabel"
-                android:layout_marginTop="@dimen/dp_10">
+                android:layout_marginTop="@dimen/dp_10"
+                app:passwordToggleEnabled="true">
+
                 <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/confirm_password"
+                    android:id="@+id/etConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="CONFIRM PASSWORD"
                     android:fontFamily="sans-serif"
+                    android:hint="CONFIRM PASSWORD"
                     android:inputType="textPassword"
-                    android:textSize="@dimen/sp_18"
-                    android:drawableEnd="@drawable/eye" />
+                    android:textSize="@dimen/sp_18" />
             </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
 
         <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/tv_email_signin"
+            android:id="@+id/tvEmailSignin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Already have an account? Sign in!"
-            android:fontFamily="sans-serif"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/dp_15"
+            android:fontFamily="sans-serif"
             android:gravity="center"
-            android:textColor="@color/colorBlack"
-            android:layout_marginBottom="@dimen/dp_15"/>
+            android:text="Already have an account? Sign in!"
+            android:textColor="@color/colorBlack" />
 
         <com.balysv.materialripple.MaterialRippleLayout
             android:id="@+id/ripple_email_continue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mrl_rippleOverlay="true"
-            app:mrl_rippleColor="@color/colorPrimaryDark"
+            android:layout_above="@+id/tvEmailSignin"
+            android:layout_marginBottom="@dimen/dp_15"
             app:mrl_rippleAlpha="0.2"
+            app:mrl_rippleColor="@color/colorPrimaryDark"
             app:mrl_rippleDelayClick="true"
             app:mrl_rippleHover="true"
-            android:layout_above="@+id/tv_email_signin"
-            android:layout_marginBottom="@dimen/dp_15">
+            app:mrl_rippleOverlay="true">
+
             <android.support.v7.widget.AppCompatButton
-                android:id="@+id/btn_email_continue"
+                android:id="@+id/btnContinue"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="sans-serif"
+                android:shadowColor="@color/colorBlack"
                 android:text="CONTINUE"
                 android:textAllCaps="true"
-                android:fontFamily="sans-serif"
-                android:textColor="@color/colorWhite"
-                android:background="@color/colorPrimary"
-                android:shadowColor="@color/colorBlack" />
+                android:textColor="@color/colorWhite" />
         </com.balysv.materialripple.MaterialRippleLayout>
-
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_conditions"
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/ripple_email_continue"
-            android:fontFamily="sans-serif"
             android:layout_marginBottom="@dimen/dp_15"
-            android:textColor="@color/colorBlack"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
             android:text="By tapping continue, you agree to the Terms \n&amp; Conditions and Privacy Policy"
-            android:gravity="center"/>
+            android:textColor="@color/colorBlack"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </LinearLayout>

@@ -2,6 +2,7 @@
     <string name="app_name">MaterialKingSeller</string>
 
     <string name="google_maps_key">AIzaSyC60LI6m3OzxDAuUIWrhQP6jBPyTjgmsR8</string>
-    <string name="loading">Loading please wait</string>
+    <string name="ic_check_circle_blank">&#xe03e;</string>
+
 
 </resources>

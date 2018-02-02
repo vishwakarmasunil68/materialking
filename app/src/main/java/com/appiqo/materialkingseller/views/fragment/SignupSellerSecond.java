@@ -5,10 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,15 +23,10 @@ import com.appiqo.materialkingseller.helper.AdjustableLayout;
 import com.appiqo.materialkingseller.helper.MultiSelectionSpinner;
 import com.appiqo.materialkingseller.helper.ProgressView;
 import com.appiqo.materialkingseller.helper.Validation;
-<<<<<<< HEAD
-import com.appiqo.materialkingseller.views.activity.SelectCityActivity;
-=======
 import com.appiqo.materialkingseller.model.AddressDecoder;
->>>>>>> 70afcd5675c7405d5608e230f7d0da42f0f4fff1
+import com.appiqo.materialkingseller.views.activity.SelectCityActivity;
 import com.appiqo.materialkingseller.views.activity.SignupHandler;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.nguyenhoanglam.imagepicker.model.Config;
@@ -45,9 +38,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -55,79 +50,55 @@ import static android.app.Activity.RESULT_OK;
  * Created by Hp on 1/19/2018.
  */
 
-public class SignupSellerSecond extends Fragment implements View.OnClickListener {
+public class SignupSellerSecond extends Fragment {
     View view;
-    Toolbar toolbar;
-
-    AppCompatButton btnContinue;
-
-    @BindView(R.id.et_company_name)
-    AppCompatEditText etCompanyName;
-
-    @BindView(R.id.et_contact_name)
-    AppCompatEditText etContactName;
-
-    @BindView(R.id.et_address)
-    AppCompatEditText etAddress;
-
-    @BindView(R.id.et_telephone)
-    AppCompatEditText etTelephone;
-
-    @BindView(R.id.tv_state)
-    AppCompatEditText tvState;
-
-    @BindView(R.id.tv_city)
-    AppCompatEditText tvCity;
-
-    @BindView(R.id.et_pincode)
-    AppCompatEditText etPincode;
-
-    @BindView(R.id.et_area)
-    AppCompatEditText etArea;
-
-    @BindView(R.id.et_cities_to_serve)
-    AppCompatEditText etCitiesToServe;
-
-    @BindView(R.id.et_registration_no)
-    AppCompatEditText etRegistrationNo;
-
-    @BindView(R.id.et_quantity)
-    AppCompatEditText etQuantity;
-
-    @BindView(R.id.et_bill_picture)
-    AppCompatEditText etBillPicture;
-
-    @BindView(R.id.multiselectionspinner)
-    MultiSelectionSpinner multiselectionspinner;
-
-    @BindView(R.id.iv_selected_bill)
-    ImageView ivSelectedBill;
-
-    public int CITIES_TO_SERVE_REQUEST = 150;
-
-    public int PLACE_PICKER_REQUEST = 99;
-
-    String firmName, contactName, businessAddress, telephone, state, city, pincode, area, citiesToServe, businessTpye, BusinessRegistrationNo, Quantity;
+    String firmName, contactName, citiesserve, businessString, citiesString = "", businessAddress, telephone, state, city, pincode, area, BusinessRegistrationNo, Quantity;
     Double lat;
     Double longi;
-
-    Double citieslat;
-    Double citieslongi;
-    String citiesserve = "";
-
     Unbinder unbinder;
     List<String> stringList = new ArrayList<>();
 
-    private AdjustableLayout adjustableLayout;
-    ProgressView progressView;
-    String businessString = "";
+    @BindView(R.id.et_company_name)
+    AppCompatEditText etCompanyName;
+    @BindView(R.id.et_contact_name)
+    AppCompatEditText etContactName;
+    @BindView(R.id.et_address)
+    AppCompatEditText etAddress;
+    @BindView(R.id.tv_state)
+    AppCompatEditText tvState;
+    @BindView(R.id.tv_city)
+    AppCompatEditText tvCity;
+    @BindView(R.id.et_pincode)
+    AppCompatEditText etPincode;
+    @BindView(R.id.et_area)
+    AppCompatEditText etArea;
+    @BindView(R.id.et_telephone)
+    AppCompatEditText etTelephone;
+    @BindView(R.id.et_cities_to_serve)
+    AppCompatEditText etCitiesToServe;
+    @BindView(R.id.container)
+    AdjustableLayout container;
+    @BindView(R.id.multiselectionspinner)
+    MultiSelectionSpinner multiselectionspinner;
+    @BindView(R.id.et_registration_no)
+    AppCompatEditText etRegistrationNo;
+    @BindView(R.id.et_quantity)
+    AppCompatEditText etQuantity;
+    @BindView(R.id.et_bill_picture)
+    AppCompatEditText etBillPicture;
+    @BindView(R.id.iv_selected_bill)
+    ImageView ivSelectedBill;
 
-<<<<<<< HEAD
+
+    ProgressView progressView;
+
     Intent intent;
-    public final int REQUEST_CODE_FOR_CITIES=1001;
-=======
+    public final int REQUEST_CODE_FOR_CITIES = 1001;
     ApiInterface apiInterface;
->>>>>>> 70afcd5675c7405d5608e230f7d0da42f0f4fff1
+    @BindView(R.id.etLandmark)
+    AppCompatEditText etLandmark;
+    @BindView(R.id.btn_signup_seller_second_continue)
+    AppCompatButton btnSignupSellerSecondContinue;
 
 
     @Nullable
@@ -135,75 +106,31 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_signup_second, container, false);
         unbinder = ButterKnife.bind(this, view);
+        progressView = new ProgressView(getActivity());
+        apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        initialize();
 
-        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Sign Up");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setSubtitle("3/4");
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
-
+        ((SignupHandler) getActivity()).setupToolbar("Sign Up", "3/4", true);
 
         List<String> businesstypeList = new ArrayList<String>();
-        businesstypeList.add("manufacture");
-        businesstypeList.add("retailer");
-        businesstypeList.add("wholseler");
-        businesstypeList.add("importer");
-        businesstypeList.add("c & f");
-
+        businesstypeList.add("Manufacture");
+        businesstypeList.add("Retailer");
+        businesstypeList.add("Wholseler");
+        businesstypeList.add("Importer");
+        businesstypeList.add("C & F");
         multiselectionspinner.setItems(businesstypeList);
-
-
-        multiselectionspinner.setListener(new MultiSelectionSpinner.OnMultipleItemsSelectedListener() {
-            @Override
-            public void selectedIndices(List<Integer> indices) {
-
-            }
-
-            @Override
-            public void selectedStrings(List<String> strings) {
-                Log.e("strings", strings.toString());
-                for (int i = 0; i < strings.size(); i++) {
-                    if (i == 0) {
-                        businessString = strings.get(0);
-                        Log.e("business", businessString);
-                    } else {
-                        businessString += "," + strings.get(i);
-                        Log.e("business", businessString);
-                    }
-                }
-            }
-        });
-
-        btnContinue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoNext();
-            }
-        });
-
-        etAddress.setOnClickListener(this);
-        etCitiesToServe.setOnClickListener(this);
-        adjustableLayout = (AdjustableLayout) view.findViewById(R.id.container); //Custom layout file
-        etBillPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imagePicker();
-            }
-        });
-
-
-        setDefaults();
-
-
+        multiselectionspinner.setSelection(0);
+        addRandomViewDefaults();
         return view;
     }
 
     private void gotoNext() {
-        if (!(stringList.size() > 0)) {
-            Toast.makeText(getActivity(), "Please Enter Your cities to serve.", Toast.LENGTH_SHORT).show();
-            return;
+        for (int i = 0; i < stringList.size(); i++) {
+            if (i == 0) {
+                citiesString = stringList.get(0);
+            } else {
+                citiesString += "," + stringList.get(i);
+            }
         }
         firmName = etCompanyName.getText().toString();
         contactName = etContactName.getText().toString();
@@ -215,20 +142,49 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
         area = etArea.getText().toString();
         BusinessRegistrationNo = etRegistrationNo.getText().toString();
         Quantity = etQuantity.getText().toString();
+        businessString = multiselectionspinner.getSelectedItemsAsString().replace("[", "").replace("]", "");
 
-        String citiesString = "";
-        for (int i = 0; i < stringList.size(); i++) {
-            if (i == 0) {
-                citiesString = stringList.get(0);
-            } else {
-                citiesString += "," + stringList.get(i);
-            }
-        }
 
-        if (Validation.nameValidator(firmName) || Validation.nameValidator(contactName) || Validation.nameValidator(businessAddress) || Validation.nameValidator(telephone)
-                || Validation.nameValidator(state) || Validation.nameValidator(city) || Validation.nameValidator(pincode) || Validation.nameValidator(area)
-                || Validation.nameValidator(BusinessRegistrationNo)) {
-
+        if (Validation.nullValidator(firmName)) {
+            etCompanyName.setError("Enter Firm Name");
+            etCompanyName.requestFocus();
+        } else if (Validation.nullValidator(contactName)) {
+            etContactName.setError("Enter Contact Name");
+            etContactName.requestFocus();
+        } else if (Validation.nullValidator(businessAddress)) {
+            etAddress.setError("Enter Address");
+            etAddress.requestFocus();
+        } else if (Validation.nullValidator(etLandmark.getText().toString())) {
+            etLandmark.setError("Enter Street/Landmark");
+            etLandmark.requestFocus();
+        } else if (Validation.nullValidator(state)) {
+            tvState.setError("Enter State");
+            tvState.requestFocus();
+        } else if (Validation.nullValidator(city)) {
+            tvCity.setError("Enter City");
+            tvCity.requestFocus();
+        } else if (Validation.nullValidator(pincode)) {
+            etPincode.setError("Enter Pin code");
+            etPincode.requestFocus();
+        } else if (Validation.nullValidator(area)) {
+            etArea.setError("Enter Area");
+            etArea.requestFocus();
+        } else if (Validation.nullValidator(telephone)) {
+            etTelephone.setError("Enter Telephone");
+            etTelephone.requestFocus();
+        } else if (Validation.nullValidator(citiesString)) {
+            Toast.makeText(getActivity(), "Select City To Serve", Toast.LENGTH_SHORT).show();
+        } else if (Validation.nullValidator(businessString)) {
+            Toast.makeText(getActivity(), "Enter Business Type", Toast.LENGTH_SHORT).show();
+        } else if (Validation.nullValidator(BusinessRegistrationNo)) {
+            etRegistrationNo.setError("Enter Registration No");
+            etRegistrationNo.requestFocus();
+        } else if (Validation.nullValidator(Quantity)) {
+            etQuantity.setError("Enter Quantity");
+            etQuantity.requestFocus();
+        } else if (Validation.nullValidator(SignupHandler.BILLPICTURE)) {
+            Toast.makeText(getActivity(), "Select Bill Image", Toast.LENGTH_SHORT).show();
+        } else {
             SignupSellerThird fragmentThird = new SignupSellerThird();
             Bundle bundle = new Bundle();
             bundle.putString("firmName", firmName);
@@ -243,17 +199,13 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
             bundle.putString("businessTpye", businessString);
             bundle.putString("BusinessRegistrationNo", BusinessRegistrationNo);
             bundle.putString("Quantity", Quantity);
-
             fragmentThird.setArguments(bundle);
             ((SignupHandler) getActivity()).changeFragment(fragmentThird, "signupthird");
-
-        } else {
-            Toast.makeText(getActivity(), "Please fill all the data described above", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void imagePicker() {
-        ImagePicker.with(getActivity())
+        ImagePicker.with(this)
                 .setToolbarColor("#212121")
                 .setStatusBarColor("#000000")
                 .setToolbarTextColor("#FFFFFF")
@@ -271,11 +223,6 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
                 .start();
     }
 
-    private void setDefaults() {
-        addRandomViewDefaults();
-
-    }
-
     private void addRandomViewDefaults() {
         for (int i = 0; i < stringList.size(); i++) {
             final View newView = LayoutInflater.from(getActivity()).inflate(R.layout.view_images, null);
@@ -287,17 +234,16 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
             ivRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    adjustableLayout.removeView(newView);
+                    container.removeView(newView);
                     removeFromArrayList(newView);
                 }
             });
             tvNumber.setText(stringList.get(i));
-            adjustableLayout.addView(newView);
+            container.addView(newView);
         }
     }
 
-    private void addRandomView() {
-        String name = citiesserve;
+    private void addRandomView(String name) {
         if (!TextUtils.isEmpty(name)) {
             final View newView = LayoutInflater.from(getActivity()).inflate(R.layout.view_images, null);
             TextView tvNumber = (TextView) newView.findViewById(R.id.tvNumber);
@@ -308,12 +254,12 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
             ivRemove.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    adjustableLayout.removeView(newView);
+                    container.removeView(newView);
                     removeFromArrayList(newView);
                 }
             });
             tvNumber.setText(name);
-            adjustableLayout.addView(newView);
+            container.addView(newView);
             stringList.add(name);
             Toast.makeText(getActivity(), "Added : " + name, Toast.LENGTH_SHORT).show();
 
@@ -324,17 +270,8 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
     }
 
     private void removeFromArrayList(View newView) {
-
-        Log.e("newView.getTag()", newView.getTag().toString());
         stringList.remove(newView.getTag());
 
-    }
-
-    private void initialize() {
-        toolbar = view.findViewById(R.id.toolbar);
-        btnContinue = view.findViewById(R.id.btn_signup_seller_second_continue);
-        progressView = new ProgressView(getActivity());
-        apiInterface = ApiClient.getClient().create(ApiInterface.class);
     }
 
     @Override
@@ -344,38 +281,16 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.et_address:
-                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-                try {
-                    getActivity().startActivityForResult(builder.build(getActivity()), PLACE_PICKER_REQUEST);
-                } catch (GooglePlayServicesRepairableException e) {
-                    e.printStackTrace();
-                } catch (GooglePlayServicesNotAvailableException e) {
-                    e.printStackTrace();
-                }
-                break;
-            case R.id.et_cities_to_serve:
-
-                intent=new Intent(getActivity(), SelectCityActivity.class);
-                startActivityForResult(intent,REQUEST_CODE_FOR_CITIES);
-
-
-                /*PlacePicker.IntentBuilder citiesbbuilder = new PlacePicker.IntentBuilder();
-                try {
-                    getActivity().startActivityForResult(citiesbbuilder.build(getActivity()), CITIES_TO_SERVE_REQUEST);
-                } catch (GooglePlayServicesRepairableException e) {
-                    e.printStackTrace();
-                } catch (GooglePlayServicesNotAvailableException e) {
-                    e.printStackTrace();
-                }*/
-        }
-    }
-
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.e("code", "" + requestCode);
+        if (requestCode == 1001) {
+            if (resultCode == RESULT_OK) {
+                addRandomView(data.getStringExtra("city"));
+            }
+        }
+
+
         if (requestCode == 99) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getActivity(), data);
@@ -383,14 +298,6 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
                 longi = place.getLatLng().longitude;
                 etAddress.setText(place.getAddress());
                 getAddress("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + longi + "&sensor=true&key=AIzaSyC44YXpePl5MHdJicOzT7qEGwO4BWfH-tU", 1);
-            }
-        }
-        if (requestCode == 150) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlacePicker.getPlace(getActivity(), data);
-                citieslat = place.getLatLng().latitude;
-                citieslongi = place.getLatLng().longitude;
-                getAddress("https://maps.googleapis.com/maps/api/geocode/json?latlng=" + citieslat + "," + citieslongi + "&sensor=true&key=AIzaSyC44YXpePl5MHdJicOzT7qEGwO4BWfH-tU", 2);
             }
         }
         if (requestCode == Config.RC_PICK_IMAGES && resultCode == RESULT_OK && data != null) {
@@ -410,7 +317,7 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
         Call<AddressDecoder> call = apiInterface.address_decoder(url);
         call.enqueue(new Callback<AddressDecoder>() {
             @Override
-            public void onResponse(Call<AddressDecoder> call, retrofit2.Response<AddressDecoder> response) {
+            public void onResponse(Call<AddressDecoder> call, Response<AddressDecoder> response) {
                 progressView.hideLoader();
                 AddressDecoder decoder = response.body();
                 String city = "", state = "", pinCode = "", locality = "";
@@ -440,7 +347,7 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
                         etPincode.setText(pinCode);
                         etArea.setText(locality);
                     } else {
-                        addRandomView();
+                        //  addRandomView();
                     }
 
                 } else {
@@ -456,5 +363,21 @@ public class SignupSellerSecond extends Fragment implements View.OnClickListener
                 t.printStackTrace();
             }
         });
+    }
+
+    @OnClick({R.id.et_cities_to_serve, R.id.et_bill_picture, R.id.btn_signup_seller_second_continue})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.et_cities_to_serve:
+                intent = new Intent(getActivity(), SelectCityActivity.class);
+                startActivityForResult(intent, REQUEST_CODE_FOR_CITIES);
+                break;
+            case R.id.et_bill_picture:
+                imagePicker();
+                break;
+            case R.id.btn_signup_seller_second_continue:
+                gotoNext();
+                break;
+        }
     }
 }
