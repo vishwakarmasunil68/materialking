@@ -156,7 +156,6 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
                 if (response.body().getStatus() == 1) {
                     //MyApplication.writeStringPref(PrefsData.PREF_MOBILE,"");
                     ((SignupHandler) getActivity()).changeFragment(new SignupSellerSecond(), "signupsecond");
-                    getActivity().overridePendingTransition(R.anim.right_in, R.anim.left_out);
                 } else {
                     tvTimer.setVisibility(View.GONE);
                     tvResendOtp.setVisibility(View.VISIBLE);

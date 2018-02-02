@@ -62,15 +62,13 @@ import static android.app.Activity.RESULT_OK;
 
 public class SignupSellerThird extends Fragment {
     View view;
-    String annualTurnover, specialities, certification, categories, gstNumber, firmName, contactName, businessAddress, telephone, state, city, pincode, area, citiesToServe, businessTpye, BusinessRegistrationNo, Quantity;
+    String annualTurnover="", specialities="", certification="", categories="", gstNumber="", firmName="", contactName="", businessAddress="", landmark="",telephone="", state="", city="", pincode="", area="", citiesToServe="", businessTpye="", BusinessRegistrationNo="", Quantity="";
     ProgressView progressView;
     List<CategoryBean.ResultBean> resultBeans;
     List<CategoryBean.ResultBean.SubBean> subBeans;
     ApiInterface apiInterface;
     Unbinder unbinder;
     AndroidTreeView tView;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.et_annual_turnover)
     AppCompatEditText etAnnualTurnover;
     @BindView(R.id.et_specialities)
@@ -101,10 +99,12 @@ public class SignupSellerThird extends Fragment {
         ((SignupHandler) getActivity()).setupToolbar("Extras", "4/4", true);
         getCategoryFromApi();
         Bundle bundle = this.getArguments();
+
         if (bundle != null) {
             firmName = bundle.getString("firmName");
             contactName = bundle.getString("contactName");
             businessAddress = bundle.getString("businessAddress");
+            landmark=bundle.getString("landmark");
             telephone = bundle.getString("telephone");
             state = bundle.getString("state");
             city = bundle.getString("city");
@@ -114,6 +114,20 @@ public class SignupSellerThird extends Fragment {
             businessTpye = bundle.getString("businessTpye");
             BusinessRegistrationNo = bundle.getString("BusinessRegistrationNo");
             Quantity = bundle.getString("Quantity");
+            Log.e(firmName,"firmName");
+            Log.e(contactName,"contactName");
+            Log.e(businessAddress,"businessAddress");
+            Log.e(landmark,"landmark");
+            Log.e(telephone,"telephone");
+            Log.e(state,"state");
+            Log.e(city,"city");
+            Log.e(pincode,"pincode");
+            Log.e(area,"area");
+            Log.e(citiesToServe,"citiesToServe");
+            Log.e(businessTpye,"businessTpye");
+            Log.e(BusinessRegistrationNo,"BusinessRegistrationNo");
+            Log.e(Quantity,"Quantity");
+
         }
 
         return view;
@@ -128,7 +142,7 @@ public class SignupSellerThird extends Fragment {
                 .setProgressBarColor("#4CAF50")
                 .setBackgroundColor("#212121")
                 .setCameraOnly(false)
-                .setMultipleMode(false)
+                .setMultipleMode(true)
                 .setFolderMode(true)
                 .setShowCamera(true)
                 .setFolderTitle("Albums")
@@ -283,22 +297,10 @@ public class SignupSellerThird extends Fragment {
                 }
                 categories = ids.toString().replace("[", "").replace("]", "");
 
-                if (Validation.nullValidator(annualTurnover)) {
-                    etAnnualTurnover.setError("Enter Annual Turnover");
-                    etAnnualTurnover.requestFocus();
-                } else if (Validation.nullValidator(specialities)) {
-                    etSpecialities.setError("Enter Specialities");
-                    etSpecialities.requestFocus();
-                } else if (Validation.nullValidator(certification)) {
-                    etCertification.setError("Enter Certification");
-                    etCertification.requestFocus();
-                } else if (Validation.nullValidator(SignupHandler.ATTACHPIC)) {
+                 if (Validation.nullValidator(SignupHandler.ATTACHPIC)) {
                     Toast.makeText(getActivity(), "Please Attach Picture", Toast.LENGTH_SHORT).show();
                 } else if (Validation.nullValidator(categories)) {
                     Toast.makeText(getActivity(), "Please Select Categories", Toast.LENGTH_SHORT).show();
-                } else if (Validation.nullValidator(gstNumber)) {
-                    etGstNumber.setError("Enter GST Number");
-                    etGstNumber.requestFocus();
                 } else {
                     userRegister();
                 }

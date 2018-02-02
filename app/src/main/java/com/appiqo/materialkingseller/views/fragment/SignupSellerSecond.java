@@ -52,7 +52,7 @@ import static android.app.Activity.RESULT_OK;
 
 public class SignupSellerSecond extends Fragment {
     View view;
-    String firmName, contactName, citiesserve, businessString, citiesString = "", businessAddress, telephone, state, city, pincode, area, BusinessRegistrationNo, Quantity;
+    String firmName="", contactName="", citiesserve, landmark="", businessString="", citiesString = "", businessAddress="", telephone="", state="", city="", pincode="", area="", BusinessRegistrationNo="", Quantity="";
     Double lat;
     Double longi;
     Unbinder unbinder;
@@ -135,6 +135,7 @@ public class SignupSellerSecond extends Fragment {
         firmName = etCompanyName.getText().toString();
         contactName = etContactName.getText().toString();
         businessAddress = etAddress.getText().toString();
+        landmark = etLandmark.getText().toString();
         telephone = etTelephone.getText().toString();
         state = tvState.getText().toString();
         city = tvCity.getText().toString();
@@ -154,9 +155,6 @@ public class SignupSellerSecond extends Fragment {
         } else if (Validation.nullValidator(businessAddress)) {
             etAddress.setError("Enter Address");
             etAddress.requestFocus();
-        } else if (Validation.nullValidator(etLandmark.getText().toString())) {
-            etLandmark.setError("Enter Street/Landmark");
-            etLandmark.requestFocus();
         } else if (Validation.nullValidator(state)) {
             tvState.setError("Enter State");
             tvState.requestFocus();
@@ -166,12 +164,6 @@ public class SignupSellerSecond extends Fragment {
         } else if (Validation.nullValidator(pincode)) {
             etPincode.setError("Enter Pin code");
             etPincode.requestFocus();
-        } else if (Validation.nullValidator(area)) {
-            etArea.setError("Enter Area");
-            etArea.requestFocus();
-        } else if (Validation.nullValidator(telephone)) {
-            etTelephone.setError("Enter Telephone");
-            etTelephone.requestFocus();
         } else if (Validation.nullValidator(citiesString)) {
             Toast.makeText(getActivity(), "Select City To Serve", Toast.LENGTH_SHORT).show();
         } else if (Validation.nullValidator(businessString)) {
@@ -179,17 +171,19 @@ public class SignupSellerSecond extends Fragment {
         } else if (Validation.nullValidator(BusinessRegistrationNo)) {
             etRegistrationNo.setError("Enter Registration No");
             etRegistrationNo.requestFocus();
-        } else if (Validation.nullValidator(Quantity)) {
-            etQuantity.setError("Enter Quantity");
-            etQuantity.requestFocus();
         } else if (Validation.nullValidator(SignupHandler.BILLPICTURE)) {
             Toast.makeText(getActivity(), "Select Bill Image", Toast.LENGTH_SHORT).show();
         } else {
             SignupSellerThird fragmentThird = new SignupSellerThird();
+
             Bundle bundle = new Bundle();
             bundle.putString("firmName", firmName);
             bundle.putString("contactName", contactName);
             bundle.putString("businessAddress", businessAddress);
+            if (!landmark.isEmpty()){
+                bundle.putString("landmark", landmark);
+            }
+
             bundle.putString("telephone", telephone);
             bundle.putString("state", state);
             bundle.putString("city", city);
