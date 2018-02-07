@@ -20,6 +20,8 @@ import com.appiqo.materialkingseller.views.fragment.SignupSellerOtp;
 import com.appiqo.materialkingseller.views.fragment.SignupSellerSecond;
 import com.appiqo.materialkingseller.views.fragment.SignupSellerThird;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,7 +29,7 @@ public class SignupHandler extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    public static String BILLPICTURE = "";
+    public static ArrayList<String> BILLPICTURE = new ArrayList<>();
     public static String ATTACHPIC = "";
 
     static {

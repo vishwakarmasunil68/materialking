@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,21 +10,28 @@
         android:id="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
         android:gravity="center|left"
-        android:hint="Address"
+        android:hint="City"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textColorHint="#555454"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="#555555" />
 
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/btn_city_continue"
-        android:layout_width="match_parent"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_gravity="center"
         android:layout_margin="@dimen/dp_10"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/round_btn"
         android:text="Use City"
         android:textColor="@color/colorWhite" />
 

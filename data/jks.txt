@@ -1,0 +1,4 @@
+jks password 123456
+
+alise appiqo
+password 123456

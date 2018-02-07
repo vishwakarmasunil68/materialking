@@ -1,34 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_10">
 
     <android.support.v7.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OTP Send Successfully"
         android:gravity="center"
-        android:textSize="@dimen/sp_20"
+        android:padding="@dimen/dp_15"
+        android:text="Resend OTP."
         android:textColor="@color/colorPrimary"
-        android:padding="@dimen/dp_15"/>
+        android:textSize="@dimen/sp_20" />
+
 
     <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/dialog_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OTP resend to the mobile number 9876543210 successfully please the enter the following code to authenticate as a valid user"
-        android:padding="@dimen/dp_10"
-        android:textColor="@color/colorBlack"/>
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/tv_dialog_got_it"
+        android:gravity="center"
+        android:text="This is Correct Number.?"
+        android:textColor="@android:color/black"
+        android:textSize="@dimen/sp_18" />
+
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ok Got it"
-        android:gravity="end"
-        android:paddingEnd="@dimen/dp_15"
-        android:textSize="@dimen/sp_16"
-        android:textColor="@color/colorBlack"
-        android:layout_marginBottom="@dimen/dp_20"/>
+        android:layout_marginTop="@dimen/dp_20"
+        android:orientation="horizontal"
+        android:weightSum="1.0">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".85">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fontFamily="sans-serif"
+                android:hint="Phone"
+                android:inputType="number"
+                android:maxLength="10"
+                android:padding="@dimen/dp_10"
+                android:textSize="@dimen/sp_18" />
+        </android.support.design.widget.TextInputLayout>
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight=".15">
+
+            <ImageView
+                android:id="@+id/edit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_edit" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:background="#555555" />
+
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btnResend"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/ripple_email_continue"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/dp_20"
+        android:background="@drawable/round_btn"
+        android:fontFamily="sans-serif"
+        android:shadowColor="@color/colorBlack"
+        android:text="RESend"
+        android:textAllCaps="true"
+        android:textColor="@color/colorWhite" />
 
 </LinearLayout>

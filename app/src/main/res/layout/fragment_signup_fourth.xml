@@ -7,6 +7,7 @@
 
 
     <ImageView
+        android:id="@+id/anim"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
@@ -21,7 +22,7 @@
         android:fontFamily="sans-serif"
         android:gravity="center"
         android:padding="@dimen/dp_20"
-        android:text="We have received your application, \na member of our team will be in  touch shortly!"
+        android:text="We have received your application, \na member of our team will be in touch shortly!"
         android:textColor="@color/colorBlack"
         android:textSize="@dimen/sp_17"
         android:textStyle="bold" />
@@ -41,7 +42,7 @@
             android:id="@+id/btn_signup_seller_fourth_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/round_btn"
             android:fontFamily="sans-serif"
             android:paddingLeft="@dimen/dp_20"
             android:paddingRight="@dimen/dp_20"

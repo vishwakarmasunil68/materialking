@@ -2,6 +2,7 @@ package com.appiqo.materialkingseller.views.fragment;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,15 +13,20 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.util.DisplayMetrics;
+import android.view.Display;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,8 +35,10 @@ import com.appiqo.materialkingseller.ApiServices.ApiInterface;
 import com.appiqo.materialkingseller.ApiServices.ApiResponse;
 import com.appiqo.materialkingseller.R;
 import com.appiqo.materialkingseller.helper.MyApplication;
+import com.appiqo.materialkingseller.helper.PinView;
 import com.appiqo.materialkingseller.helper.PrefsData;
 import com.appiqo.materialkingseller.helper.ProgressView;
+import com.appiqo.materialkingseller.helper.Utils;
 import com.appiqo.materialkingseller.views.activity.SignupHandler;
 
 import butterknife.BindView;
@@ -51,29 +59,21 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
     ApiInterface apiInterface;
     ProgressView progressView;
     int MY_PERMISSIONS_REQUEST_LOCATION = 110;
-    @BindView(R.id.etOne)
-    EditText etOne;
-    @BindView(R.id.etTwo)
-    EditText etTwo;
-    @BindView(R.id.etThree)
-    EditText etThree;
-    @BindView(R.id.etFour)
-    EditText etFour;
-    @BindView(R.id.etFive)
-    EditText etFive;
-    @BindView(R.id.etSix)
-    EditText etSix;
     @BindView(R.id.btnOtpSubmit)
     AppCompatButton btnOtpSubmit;
     @BindView(R.id.tvResendOtp)
     AppCompatTextView tvResendOtp;
     @BindView(R.id.text)
     AppCompatTextView text;
-    @BindView(R.id.otp_view)
-    LinearLayout otpView;
     @BindView(R.id.tvTimer)
     TextView tvTimer;
     CountDownTimer countDownTimer;
+    @BindView(R.id.otp_view)
+    PinView otpView;
+    @BindView(R.id.appCompatTextView)
+    AppCompatTextView appCompatTextView;
+    @BindView(R.id.root)
+    RelativeLayout root;
 
     @Nullable
     @Override
@@ -90,24 +90,44 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
         text.setText("Please Enter The OTP \n sent to " + MyApplication.readStringPref(PrefsData.PREF_MOBILE));
 
         tvResendOtp.setVisibility(View.GONE);
+        tvTimer.setVisibility(View.VISIBLE);
         countDownTimer = new CountDownTimer(1000 * 60, 1000) {
             public void onTick(long millisUntilFinished) {
                 tvTimer.setText("" + millisUntilFinished / 1000 + "Sec.");
             }
 
             public void onFinish() {
-                tvTimer.setVisibility(View.GONE);
+                tvTimer.setVisibility(View.INVISIBLE);
                 tvResendOtp.setVisibility(View.VISIBLE);
             }
         }.start();
 
-        addTextWatcher();
+        otpView.setAnimationEnable(true);
+        otpView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.length() >= 6) {
+                    getRegistertinoData(otpView.getText().toString());
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         return view;
     }
 
-    private void resendOtpConnectApi() {
+    private void resendOtpConnectApi(String mob) {
         progressView.showLoader();
-        Call<ApiResponse> call = apiInterface.resend_otp(MyApplication.readStringPref(PrefsData.PREF_MOBILE));
+        Call<ApiResponse> call = apiInterface.resend_otp(mob);
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
@@ -130,16 +150,40 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
     private void openDialogForConfirmation() {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.dialog_confirm_otp);
-        AppCompatTextView gotIt, dialogText;
-        gotIt = dialog.findViewById(R.id.tv_dialog_got_it);
-        dialogText = dialog.findViewById(R.id.dialog_text);
-        dialogText.setText("OTP resend to the mobile number " + MyApplication.readStringPref(PrefsData.PREF_MOBILE) + " successfully please the enter the following code to authenticate as a valid user");
-        gotIt.setOnClickListener(new View.OnClickListener() {
+        dialog.getWindow().getAttributes().height = (int) (getDeviceMetrics(getActivity()).heightPixels * 0.45);
+        dialog.getWindow().getAttributes().width = (int) (getDeviceMetrics(getActivity()).heightPixels * 0.55);
+        Window window = dialog.getWindow();
+        WindowManager.LayoutParams wlp = window.getAttributes();
+        wlp.gravity = Gravity.CENTER;
+        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        window.setAttributes(wlp);
+
+
+        final AppCompatEditText etEmail = (AppCompatEditText) dialog.findViewById(R.id.etEmail);
+        ImageView edit = (ImageView) dialog.findViewById(R.id.edit);
+        AppCompatButton btnResend = (AppCompatButton) dialog.findViewById(R.id.btnResend);
+        etEmail.setText(MyApplication.readStringPref(PrefsData.PREF_MOBILE));
+        etEmail.setEnabled(false);
+
+        edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setOtp("");
-                dialog.dismiss();
-                resendOtpConnectApi();
+                etEmail.setEnabled(true);
+                etEmail.requestFocus();
+            }
+        });
+
+        btnResend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                otpView.setText("");
+                if (!etEmail.getText().toString().equalsIgnoreCase("")) {
+                    resendOtpConnectApi(etEmail.getText().toString());
+                    dialog.dismiss();
+                } else {
+                    Utils.showSnack(root, "Enter Phone Number", etEmail);
+                }
+
             }
         });
         dialog.show();
@@ -157,7 +201,7 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
                     //MyApplication.writeStringPref(PrefsData.PREF_MOBILE,"");
                     ((SignupHandler) getActivity()).changeFragment(new SignupSellerSecond(), "signupsecond");
                 } else {
-                    tvTimer.setVisibility(View.GONE);
+                    tvTimer.setVisibility(View.INVISIBLE);
                     tvResendOtp.setVisibility(View.VISIBLE);
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -182,9 +226,8 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
     @Override
     public void otpReceived(String messageText) {
         String number = messageText.replaceAll("\\D+", "");
-        Log.e("num", number);
-        setOtp(number);
-        getRegistertinoData(getOtp());
+        otpView.setText(number);
+        getRegistertinoData(otpView.getText().toString());
 
     }
 
@@ -211,7 +254,11 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnOtpSubmit:
-                getRegistertinoData(getOtp());
+                if (!otpView.getText().toString().equalsIgnoreCase("")) {
+                    getRegistertinoData(otpView.getText().toString());
+                } else {
+                    Toast.makeText(getActivity(), "Enter OTP", Toast.LENGTH_SHORT).show();
+                }
                 break;
             case R.id.tvResendOtp:
                 openDialogForConfirmation();
@@ -219,111 +266,12 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
         }
     }
 
-
-    private String getOtp() {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < otpView.getChildCount(); i++) {
-            if (otpView.getChildAt(i) instanceof EditText) {
-                EditText otp = (EditText) otpView.getChildAt(i);
-                builder.append(otp.getText().toString());
-            }
-        }
-        return builder.toString();
+    public static DisplayMetrics getDeviceMetrics(Context context) {
+        DisplayMetrics metrics = new DisplayMetrics();
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        display.getMetrics(metrics);
+        return metrics;
     }
-
-    private void addTextWatcher() {
-        etOne.addTextChangedListener(new GenericTextWatcher(etOne));
-        etTwo.addTextChangedListener(new GenericTextWatcher(etTwo));
-        etThree.addTextChangedListener(new GenericTextWatcher(etThree));
-        etFour.addTextChangedListener(new GenericTextWatcher(etFour));
-        etFive.addTextChangedListener(new GenericTextWatcher(etFive));
-        etSix.addTextChangedListener(new GenericTextWatcher(etSix));
-    }
-
-    private void setOtp(String value) {
-        if (otpView != null) {
-            for (int i = 0; i < otpView.getChildCount(); i++) {
-                if (otpView.getChildAt(i) instanceof EditText) {
-                    EditText otp = (EditText) otpView.getChildAt(i);
-                    if (!value.equalsIgnoreCase("")) {
-                        otp.setText("" + value.charAt(i));
-                    } else {
-                        otp.setText("");
-                    }
-                }
-            }
-        }
-    }
-
-    public class GenericTextWatcher implements TextWatcher {
-        private View view;
-
-        private GenericTextWatcher(View view) {
-            this.view = view;
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-            // TODO Auto-generated method stub
-            String text = editable.toString();
-            switch (view.getId()) {
-
-                case R.id.etOne:
-                    if (text.length() == 1) {
-                        etTwo.requestFocus();
-                    }
-                    break;
-                case R.id.etTwo:
-                    if (text.length() == 1) {
-                        etThree.requestFocus();
-                    } else if (text.length() == 0) {
-                        etOne.requestFocus();
-                    }
-                    break;
-                case R.id.etThree:
-                    if (text.length() == 1) {
-                        etFour.requestFocus();
-                    } else if (text.length() == 0) {
-                        etTwo.requestFocus();
-                    }
-                    break;
-                case R.id.etFour:
-                    if (text.length() == 1) {
-                        etFive.requestFocus();
-                    } else if (text.length() == 0) {
-                        etThree.requestFocus();
-                    }
-                    break;
-                case R.id.etFive:
-                    if (text.length() == 1) {
-                        etSix.requestFocus();
-                    } else if (text.length() == 0) {
-                        etFour.requestFocus();
-                    }
-                    break;
-                case R.id.etSix:
-
-                    if (text.length() == 1) {
-                        getRegistertinoData(getOtp());
-                    } else if (text.length() == 0) {
-                        etFive.requestFocus();
-                    }
-
-                    break;
-
-            }
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            // TODO Auto-generated method stub
-        }
-
-        @Override
-        public void onTextChanged(CharSequence arg0, int arg1, int arg2, int arg3) {
-            // TODO Auto-generated method stub
-        }
-    }
-
 
 }

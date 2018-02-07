@@ -12,6 +12,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.appiqo.materialkingseller.ApiServices.ApiClient;
@@ -21,6 +22,7 @@ import com.appiqo.materialkingseller.R;
 import com.appiqo.materialkingseller.helper.MyApplication;
 import com.appiqo.materialkingseller.helper.PrefsData;
 import com.appiqo.materialkingseller.helper.ProgressView;
+import com.appiqo.materialkingseller.helper.Utils;
 import com.appiqo.materialkingseller.helper.Validation;
 import com.appiqo.materialkingseller.views.activity.LoginActivity;
 import com.appiqo.materialkingseller.views.activity.SignupHandler;
@@ -61,6 +63,8 @@ public class SignupSellerFirst extends Fragment {
     @BindView(R.id.tv_conditions)
     AppCompatTextView tvConditions;
     Unbinder unbinder;
+    @BindView(R.id.root)
+    LinearLayout root;
 
 
     @Nullable
@@ -112,18 +116,16 @@ public class SignupSellerFirst extends Fragment {
         String mobile = etMobileNumber.getText().toString().trim();
         String pass = etPassword.getText().toString().trim();
         String repass = etConfirmPassword.getText().toString().trim();
+
+
         if (!Validation.emailValidator(email)) {
-            etEmail.setError("Enter Email");
-            etEmail.requestFocus();
+            Utils.showSnack(root, "Please Enter Email", etEmail);
         } else if (!Validation.mobileValidator(mobile)) {
-            etMobileNumber.setError("Enter Mobile");
-            etMobileNumber.requestFocus();
+            Utils.showSnack(root, "Please Enter Mobile", etMobileNumber);
         } else if (!Validation.passValidator(pass)) {
-            etPassword.setError("Enter Password");
-            etPassword.requestFocus();
+            Utils.showSnack(root, "Please Enter Password", etPassword);
         } else if (!Validation.confirmPassValidator(pass, repass)) {
-            etConfirmPassword.setError("Password not Matching");
-            etConfirmPassword.requestFocus();
+            Utils.showSnack(root, "Password not Matching", etPassword);
         } else {
             createUser(email, mobile, pass);
         }

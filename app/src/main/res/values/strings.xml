@@ -3,6 +3,7 @@
 
     <string name="google_maps_key">AIzaSyC60LI6m3OzxDAuUIWrhQP6jBPyTjgmsR8</string>
     <string name="ic_check_circle_blank">&#xe03e;</string>
+    <string name="didn_t_get_otp">Didn\'t get OTP.?</string>
 
 
 </resources>

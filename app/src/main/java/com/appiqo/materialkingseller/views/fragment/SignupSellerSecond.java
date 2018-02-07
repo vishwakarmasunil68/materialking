@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ import com.appiqo.materialkingseller.R;
 import com.appiqo.materialkingseller.helper.AdjustableLayout;
 import com.appiqo.materialkingseller.helper.MultiSelectionSpinner;
 import com.appiqo.materialkingseller.helper.ProgressView;
+import com.appiqo.materialkingseller.helper.Utils;
 import com.appiqo.materialkingseller.helper.Validation;
 import com.appiqo.materialkingseller.model.AddressDecoder;
 import com.appiqo.materialkingseller.views.activity.SelectCityActivity;
@@ -52,7 +54,20 @@ import static android.app.Activity.RESULT_OK;
 
 public class SignupSellerSecond extends Fragment {
     View view;
-    String firmName="", contactName="", citiesserve, landmark="", businessString="", citiesString = "", businessAddress="", telephone="", state="", city="", pincode="", area="", BusinessRegistrationNo="", Quantity="";
+    String firmName = "",
+            contactName = "",
+            citiesserve = "",
+            landmark = "",
+            businessString = "",
+            citiesString = "",
+            businessAddress = "",
+            telephone = "",
+            state = "",
+            city = "",
+            pincode = "",
+            area = "",
+            BusinessRegistrationNo = "",
+            Quantity = "";
     Double lat;
     Double longi;
     Unbinder unbinder;
@@ -99,6 +114,8 @@ public class SignupSellerSecond extends Fragment {
     AppCompatEditText etLandmark;
     @BindView(R.id.btn_signup_seller_second_continue)
     AppCompatButton btnSignupSellerSecondContinue;
+    @BindView(R.id.root)
+    ScrollView root;
 
 
     @Nullable
@@ -113,9 +130,9 @@ public class SignupSellerSecond extends Fragment {
         ((SignupHandler) getActivity()).setupToolbar("Sign Up", "3/4", true);
 
         List<String> businesstypeList = new ArrayList<String>();
-        businesstypeList.add("Manufacture");
+        businesstypeList.add("Manufacturer");
         businesstypeList.add("Retailer");
-        businesstypeList.add("Wholseler");
+        businesstypeList.add("Wholesaler");
         businesstypeList.add("Importer");
         businesstypeList.add("C & F");
         multiselectionspinner.setItems(businesstypeList);
@@ -147,32 +164,23 @@ public class SignupSellerSecond extends Fragment {
 
 
         if (Validation.nullValidator(firmName)) {
-            etCompanyName.setError("Enter Firm Name");
-            etCompanyName.requestFocus();
+            Utils.showSnack(root, "Enter Firm Name", etCompanyName);
         } else if (Validation.nullValidator(contactName)) {
-            etContactName.setError("Enter Contact Name");
-            etContactName.requestFocus();
+            Utils.showSnack(root, "Enter Contact Name", etContactName);
         } else if (Validation.nullValidator(businessAddress)) {
-            etAddress.setError("Enter Address");
-            etAddress.requestFocus();
+            Utils.showSnack(root, "Enter Address", etAddress);
         } else if (Validation.nullValidator(state)) {
-            tvState.setError("Enter State");
-            tvState.requestFocus();
+            Utils.showSnack(root, "Enter State", tvState);
         } else if (Validation.nullValidator(city)) {
-            tvCity.setError("Enter City");
-            tvCity.requestFocus();
+            Utils.showSnack(root, "Enter City", tvCity);
         } else if (Validation.nullValidator(pincode)) {
-            etPincode.setError("Enter Pin code");
-            etPincode.requestFocus();
+            Utils.showSnack(etPincode, "Enter Pin code", tvCity);
         } else if (Validation.nullValidator(citiesString)) {
-            Toast.makeText(getActivity(), "Select City To Serve", Toast.LENGTH_SHORT).show();
+            Utils.showSnack(etPincode, "Select City To Serve");
         } else if (Validation.nullValidator(businessString)) {
-            Toast.makeText(getActivity(), "Enter Business Type", Toast.LENGTH_SHORT).show();
-        } else if (Validation.nullValidator(BusinessRegistrationNo)) {
-            etRegistrationNo.setError("Enter Registration No");
-            etRegistrationNo.requestFocus();
-        } else if (Validation.nullValidator(SignupHandler.BILLPICTURE)) {
-            Toast.makeText(getActivity(), "Select Bill Image", Toast.LENGTH_SHORT).show();
+            Utils.showSnack(etPincode, "Enter Business Type");
+        } else if (SignupHandler.BILLPICTURE.size() <= 0) {
+            Utils.showSnack(etPincode, "Select Bill Image");
         } else {
             SignupSellerThird fragmentThird = new SignupSellerThird();
 
@@ -180,19 +188,19 @@ public class SignupSellerSecond extends Fragment {
             bundle.putString("firmName", firmName);
             bundle.putString("contactName", contactName);
             bundle.putString("businessAddress", businessAddress);
-            if (!landmark.isEmpty()){
-                bundle.putString("landmark", landmark);
-            }
 
+            bundle.putString("landmark", landmark);
             bundle.putString("telephone", telephone);
+            bundle.putString("area", area);
+            bundle.putString("Quantity", Quantity);
+
             bundle.putString("state", state);
             bundle.putString("city", city);
             bundle.putString("pincode", pincode);
-            bundle.putString("area", area);
             bundle.putString("citiesToServe", citiesString);
             bundle.putString("businessTpye", businessString);
             bundle.putString("BusinessRegistrationNo", BusinessRegistrationNo);
-            bundle.putString("Quantity", Quantity);
+
             fragmentThird.setArguments(bundle);
             ((SignupHandler) getActivity()).changeFragment(fragmentThird, "signupthird");
         }
@@ -207,13 +215,15 @@ public class SignupSellerSecond extends Fragment {
                 .setProgressBarColor("#4CAF50")
                 .setBackgroundColor("#212121")
                 .setCameraOnly(false)
-                .setMultipleMode(false)
+                .setMultipleMode(true)
                 .setFolderMode(true)
+                .setLimitMessage("Only 5 Image you can Select")
                 .setShowCamera(true)
                 .setFolderTitle("Albums")
                 .setImageTitle("Galleries")
                 .setDoneTitle("Done")
                 .setKeepScreenOn(true)
+                .setMaxSize(5)
                 .start();
     }
 
@@ -298,7 +308,9 @@ public class SignupSellerSecond extends Fragment {
             ArrayList<Image> images = data.getParcelableArrayListExtra(Config.EXTRA_IMAGES);
             if (images.size() > 0) {
                 etBillPicture.setText("Change Bill");
-                SignupHandler.BILLPICTURE = images.get(0).getPath();
+                for (Image image : images) {
+                    SignupHandler.BILLPICTURE.add(image.getPath());
+                }
                 Glide.with(getActivity()).load(images.get(0).getPath()).into(ivSelectedBill);
             } else {
                 etBillPicture.setText("Select Bill Picture");

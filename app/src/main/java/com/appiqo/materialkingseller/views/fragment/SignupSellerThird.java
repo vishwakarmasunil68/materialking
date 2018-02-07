@@ -7,13 +7,12 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.appiqo.materialkingseller.ApiServices.ApiClient;
@@ -29,6 +28,7 @@ import com.appiqo.materialkingseller.helper.SelectableItemHolder;
 import com.appiqo.materialkingseller.helper.Utils;
 import com.appiqo.materialkingseller.helper.Validation;
 import com.appiqo.materialkingseller.model.CategoryBean;
+import com.appiqo.materialkingseller.views.activity.MainActivity;
 import com.appiqo.materialkingseller.views.activity.SignupHandler;
 import com.bumptech.glide.Glide;
 import com.nguyenhoanglam.imagepicker.model.Config;
@@ -62,7 +62,24 @@ import static android.app.Activity.RESULT_OK;
 
 public class SignupSellerThird extends Fragment {
     View view;
-    String annualTurnover="", specialities="", certification="", categories="", gstNumber="", firmName="", contactName="", businessAddress="", landmark="",telephone="", state="", city="", pincode="", area="", citiesToServe="", businessTpye="", BusinessRegistrationNo="", Quantity="";
+    String annualTurnover = "",
+            specialities = "",
+            certification = "",
+            categories = "",
+            gstNumber = "",
+            firmName = "",
+            contactName = "",
+            businessAddress = "",
+            landmark = "",
+            telephone = "",
+            state = "",
+            city = "",
+            pincode = "",
+            area = "",
+            citiesToServe = "",
+            businessTpye = "",
+            BusinessRegistrationNo = "",
+            Quantity = "";
     ProgressView progressView;
     List<CategoryBean.ResultBean> resultBeans;
     List<CategoryBean.ResultBean.SubBean> subBeans;
@@ -85,6 +102,8 @@ public class SignupSellerThird extends Fragment {
     AppCompatEditText etGstNumber;
     @BindView(R.id.btn_signup_seller_third_continue)
     AppCompatButton btnSignupSellerThirdContinue;
+    @BindView(R.id.root)
+    ScrollView root;
 
 
     @Nullable
@@ -104,7 +123,7 @@ public class SignupSellerThird extends Fragment {
             firmName = bundle.getString("firmName");
             contactName = bundle.getString("contactName");
             businessAddress = bundle.getString("businessAddress");
-            landmark=bundle.getString("landmark");
+            landmark = bundle.getString("landmark");
             telephone = bundle.getString("telephone");
             state = bundle.getString("state");
             city = bundle.getString("city");
@@ -114,19 +133,6 @@ public class SignupSellerThird extends Fragment {
             businessTpye = bundle.getString("businessTpye");
             BusinessRegistrationNo = bundle.getString("BusinessRegistrationNo");
             Quantity = bundle.getString("Quantity");
-            Log.e(firmName,"firmName");
-            Log.e(contactName,"contactName");
-            Log.e(businessAddress,"businessAddress");
-            Log.e(landmark,"landmark");
-            Log.e(telephone,"telephone");
-            Log.e(state,"state");
-            Log.e(city,"city");
-            Log.e(pincode,"pincode");
-            Log.e(area,"area");
-            Log.e(citiesToServe,"citiesToServe");
-            Log.e(businessTpye,"businessTpye");
-            Log.e(BusinessRegistrationNo,"BusinessRegistrationNo");
-            Log.e(Quantity,"Quantity");
 
         }
 
@@ -142,7 +148,7 @@ public class SignupSellerThird extends Fragment {
                 .setProgressBarColor("#4CAF50")
                 .setBackgroundColor("#212121")
                 .setCameraOnly(false)
-                .setMultipleMode(true)
+                .setMultipleMode(false)
                 .setFolderMode(true)
                 .setShowCamera(true)
                 .setFolderTitle("Albums")
@@ -204,6 +210,7 @@ public class SignupSellerThird extends Fragment {
         headers.put("business_address", RequestBody.create(MediaType.parse("text/plain"), businessAddress));
         headers.put("telephone", RequestBody.create(MediaType.parse("text/plain"), telephone));
         headers.put("state", RequestBody.create(MediaType.parse("text/plain"), state));
+        headers.put("landmark", RequestBody.create(MediaType.parse("text/plain"), landmark));
         headers.put("city", RequestBody.create(MediaType.parse("text/plain"), city));
         headers.put("pincode", RequestBody.create(MediaType.parse("text/plain"), pincode));
         headers.put("area", RequestBody.create(MediaType.parse("text/plain"), area));
@@ -220,23 +227,28 @@ public class SignupSellerThird extends Fragment {
         headers.put("deviceType", RequestBody.create(MediaType.parse("text/plain"), "android"));
         headers.put("id", RequestBody.create(MediaType.parse("text/plain"), MyApplication.readStringPref(PrefsData.PREF_USERID)));
 
+        MultipartBody.Part userfile1 = null;
+        MultipartBody.Part userfile2 = null;
+        if (!SignupHandler.ATTACHPIC.equalsIgnoreCase("")) {
+            File attachPic = Utils.compressFile(getActivity(), new File(SignupHandler.ATTACHPIC));
+            userfile1 = MultipartBody.Part.createFormData("userfile1", attachPic.getName(), RequestBody.create(MediaType.parse("*/*"), attachPic));
+        }
 
-        File attachPic = Utils.compressFile(getActivity(), new File(SignupHandler.ATTACHPIC));
-        File billPic = Utils.compressFile(getActivity(), new File(SignupHandler.BILLPICTURE));
-
-        MultipartBody.Part userfile1 = MultipartBody.Part.createFormData("userfile1", attachPic.getName(), RequestBody.create(MediaType.parse("*/*"), attachPic));
-        MultipartBody.Part userfile2 = MultipartBody.Part.createFormData("userfile2", billPic.getName(), RequestBody.create(MediaType.parse("*/*"), billPic));
-
+        for (String s : SignupHandler.BILLPICTURE) {
+            File billPic = Utils.compressFile(getActivity(), new File(s));
+            userfile2 = MultipartBody.Part.createFormData("userfile2[]", billPic.getName(), RequestBody.create(MediaType.parse("*/*"), billPic));
+        }
         Call<ApiResponse> call = apiInterface.user_register(
                 userfile1, userfile2, headers);
-
         call.enqueue(new Callback<ApiResponse>() {
             @Override
             public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
                 progressView.hideLoader();
                 if (response.body().getStatus() == 1) {
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                    ((SignupHandler) getActivity()).changeFragment(new SignupSellerFourth(), "signupfourth");
+                    getActivity().startActivity(new Intent(getActivity(), MainActivity.class));
+                    getActivity().finish();
+                    //((SignupHandler) getActivity()).changeFragment(new SignupSellerFourth(), "signupfourth");
                 } else {
                     Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -297,10 +309,8 @@ public class SignupSellerThird extends Fragment {
                 }
                 categories = ids.toString().replace("[", "").replace("]", "");
 
-                 if (Validation.nullValidator(SignupHandler.ATTACHPIC)) {
-                    Toast.makeText(getActivity(), "Please Attach Picture", Toast.LENGTH_SHORT).show();
-                } else if (Validation.nullValidator(categories)) {
-                    Toast.makeText(getActivity(), "Please Select Categories", Toast.LENGTH_SHORT).show();
+                if (Validation.nullValidator(categories)) {
+                    Utils.showSnack(root, "Please Select Categories");
                 } else {
                     userRegister();
                 }

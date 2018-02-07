@@ -1,5 +1,7 @@
 package com.appiqo.materialkingseller.views.fragment;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +11,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.appiqo.materialkingseller.R;
 import com.appiqo.materialkingseller.views.activity.MainActivity;
@@ -28,6 +31,8 @@ public class SignupSellerFourth extends Fragment {
     @BindView(R.id.btn_signup_seller_fourth_home)
     AppCompatButton btnSignupSellerFourthHome;
     Unbinder unbinder;
+    @BindView(R.id.anim)
+    ImageView anim;
 
     @Nullable
     @Override
@@ -35,6 +40,13 @@ public class SignupSellerFourth extends Fragment {
         view = inflater.inflate(R.layout.fragment_signup_fourth, container, false);
         unbinder = ButterKnife.bind(this, view);
         ((SignupHandler) getActivity()).setupToolbar("Application Received", "4/4", true);
+
+        ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(anim, PropertyValuesHolder.ofFloat("scaleX", 1.2f), PropertyValuesHolder.ofFloat("scaleY", 1.2f));
+        scaleDown.setDuration(400);
+        scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
+        scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
+        scaleDown.start();
+
         return view;
     }
 
