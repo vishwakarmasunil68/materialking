@@ -265,11 +265,11 @@ public class SignupSellerSecond extends Fragment {
             tvNumber.setText(name);
             container.addView(newView);
             stringList.add(name);
-            Toast.makeText(getActivity(), "Added : " + name, Toast.LENGTH_SHORT).show();
+            Utils.showSnack(root, "Added : " + name);
 
             etCitiesToServe.getText().clear();
         } else {
-            Toast.makeText(getActivity(), "Enter some text", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Not found", Toast.LENGTH_SHORT).show();
         }
     }
 

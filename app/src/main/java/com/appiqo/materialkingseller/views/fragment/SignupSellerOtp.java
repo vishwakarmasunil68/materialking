@@ -74,13 +74,14 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
     AppCompatTextView appCompatTextView;
     @BindView(R.id.root)
     RelativeLayout root;
+    boolean isGet = true;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_signup_otp, container, false);
         unbinder = ButterKnife.bind(this, view);
-        OtpReader.bind(this, "MD-SUDHIN");
+        OtpReader.bind(this, "MD-MTKING");
         ((SignupHandler) getActivity()).setupToolbar("Sign Up", "2/4", true);
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         progressView = new ProgressView(getActivity());
@@ -112,6 +113,7 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() >= 6) {
+                    isGet = false;
                     getRegistertinoData(otpView.getText().toString());
                 }
             }
@@ -225,9 +227,14 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
 
     @Override
     public void otpReceived(String messageText) {
-        String number = messageText.replaceAll("\\D+", "");
-        otpView.setText(number);
-        getRegistertinoData(otpView.getText().toString());
+
+        if (isGet) {
+            String number = messageText.replaceAll("\\D+", "");
+            otpView.setText(number);
+            isGet = false;
+            getRegistertinoData(otpView.getText().toString());
+
+        }
 
     }
 
@@ -255,6 +262,7 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
         switch (view.getId()) {
             case R.id.btnOtpSubmit:
                 if (!otpView.getText().toString().equalsIgnoreCase("")) {
+                    isGet = false;
                     getRegistertinoData(otpView.getText().toString());
                 } else {
                     Toast.makeText(getActivity(), "Enter OTP", Toast.LENGTH_SHORT).show();

@@ -2,6 +2,7 @@ package com.appiqo.materialkingseller.ApiServices;
 
 import com.appiqo.materialkingseller.model.AddressDecoder;
 import com.appiqo.materialkingseller.model.CategoryBean;
+import com.google.gson.JsonElement;
 
 import java.util.Map;
 
@@ -41,6 +42,13 @@ public interface ApiInterface {
     @FormUrlEncoded
     @POST("login")
     Call<ApiResponse> login(@Field("email") String email, @Field("password") String password);
+
+
+
+    @FormUrlEncoded
+    @POST("get_bids")
+    Call<JsonElement> get_bids(@Field("seller_id") String email, @Field("type") String password);
+
 
 
     @GET

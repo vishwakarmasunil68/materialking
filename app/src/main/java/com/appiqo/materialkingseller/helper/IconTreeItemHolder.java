@@ -3,7 +3,6 @@ package com.appiqo.materialkingseller.helper;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.appiqo.materialkingseller.R;
@@ -41,5 +40,14 @@ public class IconTreeItemHolder extends TreeNode.BaseNodeViewHolder<IconTreeItem
         public IconTreeItem(String text) {
             this.text = text;
         }
+
+        @Override
+        public String toString() {
+            return this.text;
+        }
+
     }
+
+
+
 }

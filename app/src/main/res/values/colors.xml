@@ -7,5 +7,13 @@
     <color name="colorWhite">#fff</color>
     <color name="colorBlack">#000</color>
     <color name="colorGrey">#a8a8a8</color>
+    <color name="colorDarkGrey">#677677</color>
+
+    <color name="colorGreen">#76C80E</color>
+    <color name="colorBlueLight">#1FBBA6</color>
+    <color name="colorOrange">#FF9500</color>
+    <color name="colorRed">#FF5E3A</color>
+
+
 
 </resources>

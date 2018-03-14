@@ -297,18 +297,29 @@ public class SignupSellerThird extends Fragment {
                 gstNumber = etGstNumber.getText().toString();
 
                 List<TreeNode> treeNodes = tView.getSelected();
+
                 ArrayList<String> sub = new ArrayList<>();
                 ArrayList<String> ids = new ArrayList<>();
+
                 for (int i = 0; i < treeNodes.size(); i++) {
                     sub.add(treeNodes.get(i).getValue().toString());
                 }
+
+
                 for (int i = 0; i < subBeans.size(); i++) {
                     if (sub.contains(subBeans.get(i).getName())) {
                         ids.add(subBeans.get(i).getId());
                     }
                 }
-                categories = ids.toString().replace("[", "").replace("]", "");
 
+                if (ids.isEmpty()) {
+                    for (int i = 0; i < resultBeans.size(); i++) {
+                        if (sub.contains(resultBeans.get(i).getName())) {
+                            ids.add(resultBeans.get(i).getId());
+                        }
+                    }
+                }
+                categories = ids.toString().replace("[", "").replace("]", "");
                 if (Validation.nullValidator(categories)) {
                     Utils.showSnack(root, "Please Select Categories");
                 } else {
