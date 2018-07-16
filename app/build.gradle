@@ -16,7 +16,7 @@ repositories {
 
 
 android {
-   /* signingConfigs {
+    /* signingConfigs {
         config {
             keyAlias 'appiqo'
             keyPassword '123456'
@@ -25,9 +25,10 @@ android {
         }
     }*/
     compileSdkVersion 27
-    buildToolsVersion "27.0.1"
+    buildToolsVersion "27.0.3"
+    useLibrary 'org.apache.http.legacy'
     defaultConfig {
-        applicationId "com.appiqo.materialkingseller"
+        applicationId "com.appentus.materialkingseller"
         minSdkVersion 17
         targetSdkVersion 27
         versionCode 7
@@ -85,7 +86,10 @@ dependencies {
     compile 'com.iceteck.silicompressorr:silicompressor:2.1'
     compile 'swarajsaaj:otpreader:1.1'
     compile 'com.github.bmelnychuk:atv:1.2.+'
+    compile('org.apache.httpcomponents:httpmime:4.3.6') {
+        exclude module: 'httpclient'
+    }
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
+    compile 'com.wdullaer:materialdatetimepicker:3.6.0'
 }
 apply plugin: 'com.google.gms.google-services'
-
-

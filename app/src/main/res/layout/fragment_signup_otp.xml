@@ -36,7 +36,7 @@
         android:text="Please Enter The Password \nsent to 1234567890" />
 
 
-    <com.appiqo.materialkingseller.helper.PinView
+    <com.appentus.materialkingseller.helper.PinView
         android:id="@+id/otp_view"
         style="@style/PinWidget.PinView"
         android:layout_width="wrap_content"

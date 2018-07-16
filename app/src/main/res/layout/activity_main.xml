@@ -4,310 +4,296 @@
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <include
             android:id="@+id/toolbar"
-            layout="@layout/toolbar_home"/>
+            layout="@layout/toolbar_home" />
 
-
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/frame_home"
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:id="@+id/mainLayout"
             android:layout_height="match_parent">
 
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:layout_margin="@dimen/sp_16"
-            android:layout_height="wrap_content">
-
-
             <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight=".5"
-                    android:padding="10dp"
-                    android:background="@color/colorRed"
-                    app:srcCompat = "@drawable/ic_money"
-                    android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
 
                 <LinearLayout
+                    android:id="@+id/mainLayout"
                     android:layout_width="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:orientation="vertical"
-                    android:gravity="center|left"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/totalEarning"
-                        android:text="$ 4059"
-                        android:maxLines="1"
-                        android:textColor="@color/colorDarkGrey"
-                        android:textSize="10sp"
-                        android:ellipsize="end"
-                        android:textStyle="bold"
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/sp_16"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:text="Last Month Sales"
-                        android:textColor="@color/colorGrey"
-                        android:textSize="7sp"
-                        android:textStyle="italic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:background="@color/colorRed"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/ic_money" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
+                                android:gravity="center|left"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/totalEarning"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="$ 4059"
+                                    android:textColor="@color/colorDarkGrey"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Last Month Sales"
+                                    android:textColor="@color/colorGrey"
+                                    android:textSize="7sp"
+                                    android:textStyle="italic" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:background="@color/colorOrange"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/ic_whatshot" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
+                                android:gravity="center|left"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/availableBidsTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="360"
+                                    android:textColor="@color/colorDarkGrey"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Available Bids"
+                                    android:textColor="@color/colorGrey"
+                                    android:textSize="7sp"
+                                    android:textStyle="italic" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_selected_bids"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".5"
+                                android:background="@color/colorBlueLight"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/ic_visibility" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="4dp"
+                                android:layout_marginRight="4dp"
+                                android:gravity="center|left"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/appliedBidsTv"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:text="4059"
+                                    android:textColor="@color/colorDarkGrey"
+                                    android:textSize="12sp"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Selected Bids"
+                                    android:textColor="@color/colorGrey"
+                                    android:textSize="7sp"
+                                    android:textStyle="italic" />
+
+                            </LinearLayout>
+
+
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/sp_16"
+                        android:background="@drawable/react_shape"
+                        android:orientation="horizontal"
+                        android:padding="8dp">
+
+                        <android.support.v7.widget.AppCompatSpinner
+                            android:id="@+id/spinnerOrders"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/mainSpinnerData">
+
+
+                        </android.support.v7.widget.AppCompatSpinner>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Total\nItems"
+                            android:textColor="@color/colorDarkGrey"
+                            android:textSize="12sp" />
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Order\nID"
+                            android:textColor="@color/colorDarkGrey"
+                            android:textSize="12sp" />
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Date"
+                            android:textColor="@color/colorDarkGrey"
+                            android:textSize="12sp" />
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="Status"
+                            android:textColor="@color/colorDarkGrey"
+                            android:textSize="12sp" />
+
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text=""
+                            android:textColor="@color/colorDarkGrey"
+                            android:textSize="12sp" />
+
+
+                    </LinearLayout>
+
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp" />
+
 
                 </LinearLayout>
 
 
-
-
-
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="4dp"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight=".5"
-                    android:padding="10dp"
-                    android:background="@color/colorOrange"
-                    app:srcCompat = "@drawable/ic_whatshot"
-                    android:layout_height="wrap_content" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:orientation="vertical"
-                    android:gravity="center|left"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/availableBidsTv"
-                        android:text="360"
-                        android:maxLines="1"
-                        android:textColor="@color/colorDarkGrey"
-                        android:textSize="10sp"
-                        android:ellipsize="end"
-                        android:textStyle="bold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:text="Available Bids"
-                        android:textColor="@color/colorGrey"
-                        android:textSize="7sp"
-                        android:textStyle="italic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-
-
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="4dp"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
-
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight=".5"
-                    android:padding="10dp"
-                    android:background="@color/colorBlueLight"
-                    app:srcCompat = "@drawable/ic_visibility"
-                    android:layout_height="wrap_content" />
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:orientation="vertical"
-                    android:gravity="center|left"
-                    android:layout_height="match_parent">
-
-                    <TextView
-                        android:id="@+id/appliedBidsTv"
-                        android:text="4059"
-                        android:maxLines="1"
-                        android:textColor="@color/colorDarkGrey"
-                        android:textSize="10sp"
-                        android:ellipsize="end"
-                        android:textStyle="bold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <TextView
-                        android:text="Applied Bids"
-                        android:textColor="@color/colorGrey"
-                        android:textSize="7sp"
-                        android:textStyle="italic"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-
-
-
-
-            </LinearLayout>
-
-
-
-
-
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_margin="@dimen/sp_16"
-            android:background="@drawable/react_shape"
-            android:layout_width="match_parent"
-            android:padding="8dp"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <android.support.v7.widget.AppCompatSpinner
-                android:id="@+id/spinnerOrders"
-                android:layout_width="wrap_content"
-                android:entries="@array/mainSpinnerData"
-                android:layout_height="wrap_content">
-
-
-            </android.support.v7.widget.AppCompatSpinner>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_height="wrap_content">
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="Total Items"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:textColor="@color/colorDarkGrey"
-                android:layout_height="wrap_content" />
-
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="Order ID"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:textColor="@color/colorDarkGrey"
-                android:layout_height="wrap_content" />
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="Total Bids"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:textColor="@color/colorDarkGrey"
-                android:layout_height="wrap_content" />
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="Date"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:textColor="@color/colorDarkGrey"
-                android:layout_height="wrap_content" />
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text="Status"
-                android:textSize="10sp"
-                android:gravity="center"
-                android:textColor="@color/colorDarkGrey"
-                android:layout_height="wrap_content" />
-
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:text=""
-                android:textSize="10sp"
-                android:gravity="center"
-                android:textColor="@color/colorDarkGrey"
-                android:layout_height="wrap_content" />
-
-
-        </LinearLayout>
-
-
-
-
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-
-
-        </LinearLayout>
-
-
-
+        </FrameLayout>
 
 
     </LinearLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_marginRight="20dp"
         android:layout_height="match_parent"
         android:layout_gravity="left"
+        android:layout_marginRight="20dp"
         android:background="@android:color/white">
-
 
 
     </FrameLayout>

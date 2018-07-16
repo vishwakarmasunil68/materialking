@@ -1,35 +1,35 @@
 {
   "project_info": {
-    "project_number": "468152094008",
-    "firebase_url": "https://materialkingseller.firebaseio.com",
-    "project_id": "materialkingseller",
-    "storage_bucket": "materialkingseller.appspot.com"
+    "project_number": "418626270519",
+    "firebase_url": "https://mk-seller.firebaseio.com",
+    "project_id": "mk-seller",
+    "storage_bucket": "mk-seller.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:468152094008:android:018a72fdc90b0f8c",
+        "mobilesdk_app_id": "1:418626270519:android:aec9df44af5b8d8a",
         "android_client_info": {
-          "package_name": "com.appiqo.materialkingseller"
+          "package_name": "com.appentus.materialkingseller"
         }
       },
       "oauth_client": [
         {
-          "client_id": "468152094008-sgvhu60kdm9s1s655dckdn8k7d8qfkuh.apps.googleusercontent.com",
+          "client_id": "418626270519-3v7jbvu13aeic4em319ce21p4jl5ls2h.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.appiqo.materialkingseller",
-            "certificate_hash": "66445e9174dad8d8f09258e4a1734ae666bf1c6c"
+            "package_name": "com.appentus.materialkingseller",
+            "certificate_hash": "d3be9b87d9089054bb7e3f71607e537d0e42ff9f"
           }
         },
         {
-          "client_id": "468152094008-0l3cb5e4scbl1v6h5c6lothmrrao072d.apps.googleusercontent.com",
+          "client_id": "418626270519-heftlkndiv7pejucrs8aho7p6ucqrvck.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDGro0jKcy-f6-oXEgsQaZC3RskAERZxWk"
+          "current_key": "AIzaSyC8hhbTVfmSRpVF1NvGx0WXxYC8Z6AXfb4"
         }
       ],
       "services": {
@@ -40,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "468152094008-0l3cb5e4scbl1v6h5c6lothmrrao072d.apps.googleusercontent.com",
+              "client_id": "418626270519-heftlkndiv7pejucrs8aho7p6ucqrvck.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

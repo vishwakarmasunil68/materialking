@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.appiqo.materialkingseller">
+    package="com.appentus.materialkingseller">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.READ_SMS" />
@@ -62,13 +60,18 @@
             android:name=".views.activity.SignupHandler"
             android:resizeableActivity="false"
             android:screenOrientation="portrait" />
-        <activity android:name=".views.activity.SelectCityActivity"/>
+        <activity android:name=".views.activity.SelectCityActivity" />
 
         <receiver android:name="swarajsaaj.smscodereader.receivers.OtpReader">
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <activity android:name=".views.activity.OrderDetailViewActivity" />
+        <activity android:name=".views.activity.AddRecommendedProduct" />
+        <activity android:name=".views.activity.SelectedBidsActivity" />
+        <activity android:name=".views.activity.SelectedBidInfoActivity"></activity>
     </application>
 
 </manifest>

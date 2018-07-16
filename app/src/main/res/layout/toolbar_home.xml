@@ -1,41 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:background="@color/colorPrimary"
-    android:layout_height="wrap_content">
-
+    android:gravity="center"
+    android:orientation="horizontal">
 
 
     <ImageView
         android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginLeft="@dimen/sp_16"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:srcCompat = "@drawable/ic_menu"
-        android:layout_height="35dp" />
+        app:srcCompat="@drawable/ic_menu" />
 
 
     <TextView
         android:layout_width="0dp"
-        android:gravity="center"
-        android:textSize="20sp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
         android:layout_margin="4dp"
-        android:textColor="#FFf"
+        android:layout_weight="1"
+        android:gravity="center"
         android:text="Material King"
-        android:layout_height="wrap_content" />
+        android:textColor="#FFf"
+        android:textSize="20sp" />
 
 
     <ImageView
         android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginBottom="8dp"
         android:layout_marginRight="@dimen/sp_16"
         android:layout_marginTop="8dp"
+        app:srcCompat="@drawable/ic_notifications" />
+
+    <ImageView
+        android:id="@+id/iv_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
         android:layout_marginBottom="8dp"
-        app:srcCompat = "@drawable/ic_notifications"
-        android:layout_height="35dp" />
+        android:layout_marginRight="@dimen/sp_16"
+        android:layout_marginTop="8dp"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/ic_logout" />
 
 
 </LinearLayout>
