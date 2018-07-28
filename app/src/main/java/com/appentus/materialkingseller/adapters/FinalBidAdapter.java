@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appentus.materialkingseller.R;
+import com.appentus.materialkingseller.Util.TagUtils;
 import com.appentus.materialkingseller.Util.ToastClass;
 import com.appentus.materialkingseller.pojo.NotificationPOJO;
 import com.appentus.materialkingseller.pojo.order.FinalOrderInfoPOJO;
@@ -57,12 +59,13 @@ public class FinalBidAdapter extends RecyclerView.Adapter<FinalBidAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-
+        Log.d(TagUtils.getTag(),"image url:-"+WebServicesUrls.IMAGEBASEURL+items.get(position).getBidProductInfo().getImage());
         Glide.with(activity.getApplicationContext())
                 .load(WebServicesUrls.IMAGEBASEURL+items.get(position).getBidProductInfo().getImage())
                 .into(holder.iv_product_image);
 
-        holder.tv_price_placed.setText(items.get(position).getBidProductInfo().getPriceHave());
+        holder.tv_price_placed.setText(items.get(position).getBidProductInfo().getPriceHave()+" INR");
+        holder.tv_shipping_charge.setText("Shipping :- "+items.get(position).getBidProductInfo().getShippingCharge()+" INR");
         holder.tv_product_name.setText(items.get(position).getBidProductInfo().getName());
 
         holder.btn_confirm.setOnClickListener(new View.OnClickListener() {
@@ -117,11 +120,13 @@ public class FinalBidAdapter extends RecyclerView.Adapter<FinalBidAdapter.ViewHo
             }
         });
 
-        if(!items.get(position).getSellerStatus().equalsIgnoreCase("0")){
-            holder.ll_status.setVisibility(View.GONE);
-        }else{
+        if(items.get(position).getSellerStatus().equalsIgnoreCase("0")){
             holder.ll_status.setVisibility(View.VISIBLE);
+        }else{
+            holder.ll_status.setVisibility(View.GONE);
         }
+
+        holder.tv_delivered_in.setText("Delivered in "+items.get(position).getBidProductInfo().getDeliveredOn()+" days");
 
         holder.itemView.setTag(items.get(position));
     }
@@ -140,6 +145,10 @@ public class FinalBidAdapter extends RecyclerView.Adapter<FinalBidAdapter.ViewHo
         TextView tv_product_name;
         @BindView(R.id.tv_price_placed)
         TextView tv_price_placed;
+        @BindView(R.id.tv_shipping_charge)
+        TextView tv_shipping_charge;
+        @BindView(R.id.tv_delivered_in)
+        TextView tv_delivered_in;
         @BindView(R.id.btn_confirm)
         Button btn_confirm;
         @BindView(R.id.btn_decline)

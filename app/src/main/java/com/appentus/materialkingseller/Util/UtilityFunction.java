@@ -173,4 +173,14 @@ public class UtilityFunction {
         }
     }
 
+
+    public boolean checkEdittexts(EditText... editTexts){
+        for(EditText editText:editTexts){
+            if(editText.getText().toString().length()==0){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }

@@ -14,11 +14,9 @@ import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.appentus.materialkingseller.ApiServices.ApiClient;
 import com.appentus.materialkingseller.ApiServices.ApiInterface;
-import com.appentus.materialkingseller.ApiServices.ApiResponse;
 import com.appentus.materialkingseller.R;
 import com.appentus.materialkingseller.Util.Constants;
 import com.appentus.materialkingseller.Util.UtilityFunction;
@@ -26,28 +24,17 @@ import com.appentus.materialkingseller.adapters.HomeAdapter;
 import com.appentus.materialkingseller.helper.MyApplication;
 import com.appentus.materialkingseller.helper.PrefsData;
 import com.appentus.materialkingseller.helper.ProgressView;
-import com.appentus.materialkingseller.model.HomeModel;
 import com.appentus.materialkingseller.pojo.ResponseListPOJO;
 import com.appentus.materialkingseller.pojo.order.OrderPOJO;
 import com.appentus.materialkingseller.webservice.ResponseListCallback;
-import com.appentus.materialkingseller.webservice.WebServiceBase;
 import com.appentus.materialkingseller.webservice.WebServiceBaseResponseList;
 import com.appentus.materialkingseller.webservice.WebServicesUrls;
-import com.google.gson.JsonElement;
-
-import org.apache.http.NameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     @BindView(R.id.totalEarning)
@@ -66,6 +53,10 @@ public class MainActivity extends AppCompatActivity {
     ImageView iv_logout;
     @BindView(R.id.ll_selected_bids)
     LinearLayout ll_selected_bids;
+    @BindView(R.id.iv_notification)
+    ImageView iv_notification;
+    @BindView(R.id.iv_seller_details)
+    ImageView iv_seller_details;
 
     ProgressView progressView;
     ApiInterface apiInterface;
@@ -124,14 +115,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        ll_selected_bids.setOnClickListener(new View.OnClickListener() {
+        iv_notification.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,SelectedBidsActivity.class));
+                startActivity(new Intent(MainActivity.this,SellerNotificationActivity.class));
+            }
+        });
+
+        iv_seller_details.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,SellerDetailActivity.class));
             }
         });
 
     }
+
+
 
 
     private void resendOtpConnectApi(int position) {

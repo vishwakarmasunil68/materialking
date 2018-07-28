@@ -1,33 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
+    android:id="@+id/root"
+    android:fillViewport="true">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/dp_30"
-        android:layout_marginStart="@dimen/dp_30"
-        android:layout_marginTop="@dimen/dp_30"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/dp_15">
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/etEmail"
+                android:id="@+id/et_annual_turnover"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:fontFamily="sans-serif"
-                android:hint="EMAIL *"
-                android:inputType="textEmailAddress"
+                android:hint="Annual turnover"
+                android:inputType="numberDecimal"
                 android:padding="@dimen/dp_10"
                 android:textSize="@dimen/sp_18" />
         </android.support.design.widget.TextInputLayout>
@@ -45,14 +42,13 @@
             android:layout_marginTop="@dimen/dp_10">
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/etMobileNumber"
+                android:id="@+id/et_specialities"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:fontFamily="sans-serif"
-                android:hint="MOBILE NUMBER *"
-                android:inputType="number"
-                android:maxLength="10"
+                android:hint="Specialities"
+                android:inputType="text"
                 android:padding="@dimen/dp_10"
                 android:textSize="@dimen/sp_18" />
         </android.support.design.widget.TextInputLayout>
@@ -67,17 +63,16 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            app:passwordToggleEnabled="true">
+            android:layout_marginTop="@dimen/dp_10">
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/etPassword"
+                android:id="@+id/et_certification"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:fontFamily="sans-serif"
-                android:hint="PASSWORD *"
-                android:inputType="textPassword"
+                android:hint="Certification/Awards:"
+                android:inputType="text"
                 android:padding="@dimen/dp_10"
                 android:textSize="@dimen/sp_18" />
         </android.support.design.widget.TextInputLayout>
@@ -88,21 +83,91 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:background="#555555" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:orientation="horizontal"
+            android:weightSum="1.0">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_weight=".50">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <android.support.v7.widget.AppCompatEditText
+                        android:id="@+id/et_attach_pics"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:focusable="false"
+                        android:fontFamily="sans-serif"
+                        android:hint="Attach Pics"
+                        android:inputType="text"
+                        android:padding="@dimen/dp_10"
+                        android:textSize="@dimen/sp_18" />
+                </android.support.design.widget.TextInputLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:background="#555555" />
+            </RelativeLayout>
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".50"
+                android:gravity="center">
+
+                <ImageView
+                    android:id="@+id/iv_attach_pic"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/agreement" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:paddingLeft="@dimen/dp_10"
+            android:text="Categories/Product *"
+            android:visibility="gone"
+            android:textColor="@color/colorGrey" />
+
+        <RelativeLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/dp_10" />
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/dp_10"
-            app:passwordToggleEnabled="true">
+            android:layout_marginTop="@dimen/dp_15">
 
             <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/etConfirmPassword"
+                android:id="@+id/et_gst_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:fontFamily="sans-serif"
-                android:hint="CONFIRM PASSWORD *"
-                android:inputType="textPassword"
+                android:hint="GST Number"
+                android:inputType="text"
                 android:padding="@dimen/dp_10"
                 android:textSize="@dimen/sp_18" />
         </android.support.design.widget.TextInputLayout>
@@ -113,48 +178,20 @@
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:background="#555555" />
-
 
         <android.support.v7.widget.AppCompatButton
-            android:id="@+id/btnContinue"
+            android:id="@+id/btn_signup_seller_third_continue"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/ripple_email_continue"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
             android:background="@drawable/round_btn"
             android:fontFamily="sans-serif"
-            android:shadowColor="@color/colorBlack"
-            android:text="CONTINUE"
+            android:text="SIgn up"
             android:textAllCaps="true"
+            android:layout_marginTop="@dimen/dp_20"
             android:textColor="@color/colorWhite" />
 
-        <TextView
-            android:id="@+id/tvEmailSignin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/dp_15"
-            android:layout_marginTop="20dp"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:text="Already have an account? Sign in!"
-            android:textColor="@color/colorBlack" />
-
-        <TextView
-            android:id="@+id/tv_conditions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/ripple_email_continue"
-            android:layout_marginBottom="@dimen/dp_15"
-            android:fontFamily="sans-serif"
-            android:gravity="center"
-            android:text="By tapping continue, you agree to the Terms \n&amp; Conditions and Privacy Policy"
-            android:textColor="@color/colorBlack"
-            android:visibility="gone" />
 
     </LinearLayout>
 
-
-</LinearLayout>
+</ScrollView>

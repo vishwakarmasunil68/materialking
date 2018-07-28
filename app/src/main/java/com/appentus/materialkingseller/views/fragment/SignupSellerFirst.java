@@ -8,11 +8,11 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appentus.materialkingseller.ApiServices.ApiClient;
@@ -57,11 +57,11 @@ public class SignupSellerFirst extends Fragment {
     @BindView(R.id.etConfirmPassword)
     AppCompatEditText etConfirmPassword;
     @BindView(R.id.tvEmailSignin)
-    AppCompatTextView tvEmailSignin;
+    TextView tvEmailSignin;
     @BindView(R.id.btnContinue)
     AppCompatButton btnContinue;
     @BindView(R.id.tv_conditions)
-    AppCompatTextView tvConditions;
+    TextView tvConditions;
     Unbinder unbinder;
     @BindView(R.id.root)
     LinearLayout root;
@@ -79,29 +79,31 @@ public class SignupSellerFirst extends Fragment {
     }
 
     private void createUser(final String Email, final String mobile, final String password) {
-        final ProgressView progressView = new ProgressView(getActivity());
-        progressView.showLoader();
-        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-        Call<ApiResponse> call = apiInterface.create_user(Email, mobile, password);
-        call.enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                progressView.hideLoader();
-                if (response.body().getStatus() == 1) {
-                    MyApplication.writeStringPref(PrefsData.PREF_USERID, response.body().getId());
-                    MyApplication.writeStringPref(PrefsData.PREF_MOBILE, mobile);
-                    ((SignupHandler) getActivity()).changeFragment(new SignupSellerOtp(), "OTPFragment");
-                } else {
-                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
+//        final ProgressView progressView = new ProgressView(getActivity());
+//        progressView.showLoader();
+//        ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+//        Call<ApiResponse> call = apiInterface.create_user(Email, mobile, password);
+//        call.enqueue(new Callback<ApiResponse>() {
+//            @Override
+//            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+//                progressView.hideLoader();
+//                if (response.body().getStatus() == 1) {
+//                    MyApplication.writeStringPref(PrefsData.PREF_USERID, response.body().getId());
+//                    MyApplication.writeStringPref(PrefsData.PREF_MOBILE, mobile);
+//                    ((SignupHandler) getActivity()).changeFragment(new SignupSellerOtp(), "OTPFragment");
+//                } else {
+//                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ApiResponse> call, Throwable t) {
+//                progressView.hideLoader();
+//                t.printStackTrace();
+//            }
+//        });
 
-            @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                progressView.hideLoader();
-                t.printStackTrace();
-            }
-        });
+        ((SignupHandler) getActivity()).changeFragment(new SignupSellerOtp(), "OTPFragment");
     }
 
     @Override
@@ -131,7 +133,7 @@ public class SignupSellerFirst extends Fragment {
         }
     }
 
-    public void buildLink(String title, AppCompatTextView view, final Intent intent) {
+    public void buildLink(String title, TextView view, final Intent intent) {
         Link link = new Link(title)
                 .setTextColor(getResources().getColor(R.color.colorPrimary))
                 .setTextColorOfHighlightedLink(getResources().getColor(R.color.colorPrimary))

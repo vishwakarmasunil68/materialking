@@ -6,11 +6,11 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appentus.materialkingseller.ApiServices.ApiClient;
@@ -18,6 +18,8 @@ import com.appentus.materialkingseller.ApiServices.ApiInterface;
 import com.appentus.materialkingseller.ApiServices.ApiResponse;
 import com.appentus.materialkingseller.R;
 import com.appentus.materialkingseller.Util.Constants;
+import com.appentus.materialkingseller.Util.Pref;
+import com.appentus.materialkingseller.Util.StringUtils;
 import com.appentus.materialkingseller.Util.ToastClass;
 import com.appentus.materialkingseller.Util.UtilityFunction;
 import com.appentus.materialkingseller.helper.MyApplication;
@@ -53,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
     @BindView(R.id.btn_email_continue)
     AppCompatButton btnEmailContinue;
     @BindView(R.id.tv_email_signup)
-    AppCompatTextView tvEmailSignup;
+    TextView tvEmailSignup;
     ProgressView progressView;
 
     String Email, password;
@@ -100,18 +102,25 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Link signin = new Link("Sign up")
-                .setTextColor(getResources().getColor(R.color.colorPrimary))
-                .setTextColorOfHighlightedLink(getResources().getColor(R.color.colorPrimary))
-                .setHighlightAlpha(.4f)
-                .setUnderlined(false)
-                .setBold(false).setOnClickListener(new Link.OnClickListener() {
-                    @Override
-                    public void onClick(String clickedText) {
-                        startActivity(new Intent(LoginActivity.this, SignupHandler.class));
-                    }
-                });
-        LinkBuilder.on(tvEmailSignup).addLink(signin).build();
+//        Link signin = new Link("Sign up")
+//                .setTextColor(getResources().getColor(R.color.colorPrimary))
+//                .setTextColorOfHighlightedLink(getResources().getColor(R.color.colorPrimary))
+//                .setHighlightAlpha(.4f)
+//                .setUnderlined(false)
+//                .setBold(false).setOnClickListener(new Link.OnClickListener() {
+//                    @Override
+//                    public void onClick(String clickedText) {
+//                        startActivity(new Intent(LoginActivity.this, SignupHandler.class));
+//                    }
+//                });
+//        LinkBuilder.on(tvEmailSignup).addLink(signin).build();
+
+        tvEmailSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,RegistrationActivity.class));
+            }
+        });
 
 
         btnEmailContinue.setOnClickListener(new View.OnClickListener() {
@@ -168,24 +177,62 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onGetMsg(String apicall, String response) {
                 progressView.hideLoader();
-                try{
-                    JSONObject jsonObject=new JSONObject(response);
-                    if(jsonObject.optInt("status")==1){
-                        JSONArray jsonArray=jsonObject.optJSONArray("result");
-                        Gson gson=new Gson();
-                        UserPOJO userPOJO=gson.fromJson(jsonArray.optJSONObject(0).toString(),UserPOJO.class);
-                        MyApplication.writeBooleanPref(PrefsData.PREF_LOGINSTATUS,true);
-                        MyApplication.writeStringPref(PrefsData.PREF_USER_POJO,jsonArray.optJSONObject(0).toString());
-                        Constants.userPOJO=userPOJO;
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.optInt("status") == 1) {
+                        Pref.SetStringPref(getApplicationContext(), StringUtils.SELLER_DATA, jsonObject.optJSONObject("result").toString());
+                        Constants.userPOJO = new Gson().fromJson(jsonObject.optJSONObject("result").toString(), UserPOJO.class);
+                        Pref.SetBooleanPref(getApplicationContext(), StringUtils.IS_LOGIN, true);
+                        if(Constants.userPOJO.getOtpValidated().equals("1")){
+                            Pref.SetBooleanPref(getApplicationContext(), StringUtils.OTP_VALIDATED, true);
+                            if(Constants.userPOJO.getContactUpdated().equals("1")){
+                                Pref.SetBooleanPref(getApplicationContext(), StringUtils.CONTACT_UPDATED, true);
+                                if(Constants.userPOJO.getFinalRegistration().equals("1")){
+                                    Pref.SetBooleanPref(getApplicationContext(), StringUtils.FINAL_REGISTRATION, true);
+                                }else{
+                                    Pref.SetBooleanPref(getApplicationContext(), StringUtils.FINAL_REGISTRATION, false);
+                                }
+                            }else{
+                                Pref.SetBooleanPref(getApplicationContext(), StringUtils.CONTACT_UPDATED, false);
+                            }
+                        }else{
+                            Pref.SetBooleanPref(getApplicationContext(), StringUtils.OTP_VALIDATED, false);
+                        }
+
+                        checkLogic();
+//                        startActivity(new Intent(LoginActivity.this, OTPValidationActivity.class));
+                    } else {
+                        ToastClass.showShortToast(getApplicationContext(), jsonObject.optString("message"));
                     }
-                    ToastClass.showShortToast(getApplicationContext(),jsonObject.optString("message"));
-                }catch (Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         },"LOGIN_CALL_BACK",true).execute(WebServicesUrls.LOGIN_URL);
 
+    }
+
+
+    public void checkLogic(){
+        if (Pref.GetBooleanPref(getApplicationContext(), StringUtils.IS_LOGIN, false)) {
+            String seller_data=Pref.GetStringPref(getApplicationContext(), StringUtils.SELLER_DATA, "");
+            Constants.userPOJO = new Gson().fromJson(seller_data, UserPOJO.class);
+            if (Pref.GetBooleanPref(getApplicationContext(), StringUtils.OTP_VALIDATED, false)) {
+                if (Pref.GetBooleanPref(getApplicationContext(), StringUtils.CONTACT_UPDATED, false)) {
+                    if (Pref.GetBooleanPref(getApplicationContext(), StringUtils.FINAL_REGISTRATION, false)) {
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                    } else {
+                        startActivity(new Intent(LoginActivity.this, SellerFinalRegistrationActivity.class));
+                    }
+                } else {
+                    startActivity(new Intent(LoginActivity.this, UpdateSellerContactActivity.class));
+                }
+            } else {
+                startActivity(new Intent(LoginActivity.this, OTPValidationActivity.class));
+            }
+        } else {
+            startActivity(new Intent(LoginActivity.this, LoginActivity.class));
+        }
     }
 
 

@@ -12,9 +12,7 @@ import com.appentus.materialkingseller.adapters.NotificationAdapter;
 import com.appentus.materialkingseller.pojo.NotificationPOJO;
 import com.appentus.materialkingseller.pojo.ResponseListPOJO;
 import com.appentus.materialkingseller.webservice.ResponseListCallback;
-import com.appentus.materialkingseller.webservice.WebServiceBase;
 import com.appentus.materialkingseller.webservice.WebServiceBaseResponseList;
-import com.appentus.materialkingseller.webservice.WebServicesCallBack;
 import com.appentus.materialkingseller.webservice.WebServicesUrls;
 
 import org.apache.http.NameValuePair;
@@ -26,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SelectedBidsActivity extends AppCompatActivity {
+public class SellerNotificationActivity extends AppCompatActivity {
 
     @BindView(R.id.rv_bids)
     RecyclerView rv_bids;
@@ -34,7 +32,7 @@ public class SelectedBidsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_selected_bids);
+        setContentView(R.layout.activity_seller_notification);
         ButterKnife.bind(this);
         attachAdapter();
         callSellerNotificationAPI();

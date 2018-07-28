@@ -14,7 +14,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -62,16 +61,16 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
     @BindView(R.id.btnOtpSubmit)
     AppCompatButton btnOtpSubmit;
     @BindView(R.id.tvResendOtp)
-    AppCompatTextView tvResendOtp;
+    TextView tvResendOtp;
     @BindView(R.id.text)
-    AppCompatTextView text;
+    TextView text;
     @BindView(R.id.tvTimer)
     TextView tvTimer;
     CountDownTimer countDownTimer;
     @BindView(R.id.otp_view)
     PinView otpView;
-    @BindView(R.id.appCompatTextView)
-    AppCompatTextView appCompatTextView;
+    @BindView(R.id.TextView)
+    TextView TextView;
     @BindView(R.id.root)
     RelativeLayout root;
     boolean isGet = true;
@@ -94,7 +93,7 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
         tvTimer.setVisibility(View.VISIBLE);
         countDownTimer = new CountDownTimer(1000 * 60, 1000) {
             public void onTick(long millisUntilFinished) {
-                tvTimer.setText("" + millisUntilFinished / 1000 + "Sec.");
+//                tvTimer.setText("" + millisUntilFinished / 1000 + "Sec.");
             }
 
             public void onFinish() {
@@ -192,30 +191,30 @@ public class SignupSellerOtp extends Fragment implements OTPListener {
     }
 
     private void getRegistertinoData(final String otp) {
-        progressView.showLoader();
-        countDownTimer.cancel();
-        Call<ApiResponse> call = apiInterface.authenticate_otp(MyApplication.readStringPref(PrefsData.PREF_USERID), otp);
-        call.enqueue(new Callback<ApiResponse>() {
-            @Override
-            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
-                progressView.hideLoader();
-                if (response.body().getStatus() == 1) {
-                    //MyApplication.writeStringPref(PrefsData.PREF_MOBILE,"");
-                    ((SignupHandler) getActivity()).changeFragment(new SignupSellerSecond(), "signupsecond");
-                } else {
-                    tvTimer.setVisibility(View.INVISIBLE);
-                    tvResendOtp.setVisibility(View.VISIBLE);
-                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResponse> call, Throwable t) {
-                progressView.hideLoader();
-                t.printStackTrace();
-            }
-        });
-
+//        progressView.showLoader();
+//        countDownTimer.cancel();
+//        Call<ApiResponse> call = apiInterface.authenticate_otp(MyApplication.readStringPref(PrefsData.PREF_USERID), otp);
+//        call.enqueue(new Callback<ApiResponse>() {
+//            @Override
+//            public void onResponse(Call<ApiResponse> call, Response<ApiResponse> response) {
+//                progressView.hideLoader();
+//                if (response.body().getStatus() == 1) {
+//                    //MyApplication.writeStringPref(PrefsData.PREF_MOBILE,"");
+//                    ((SignupHandler) getActivity()).changeFragment(new SignupSellerSecond(), "signupsecond");
+//                } else {
+//                    tvTimer.setVisibility(View.INVISIBLE);
+//                    tvResendOtp.setVisibility(View.VISIBLE);
+//                    Toast.makeText(getActivity(), response.body().getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<ApiResponse> call, Throwable t) {
+//                progressView.hideLoader();
+//                t.printStackTrace();
+//            }
+//        });
+        ((SignupHandler) getActivity()).changeFragment(new SignupSellerSecond(), "signupsecond");
     }
 
 

@@ -5,9 +5,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import com.iceteck.silicompressorr.SiliCompressor;
 
@@ -24,7 +24,7 @@ public class Utils {
         return new File(filePath);
     }
 
-    public static void showSnack(View view, String msg, AppCompatTextView textView) {
+    public static void showSnack(View view, String msg, TextView textView) {
         Snackbar snackbar = Snackbar.make(view, msg, Snackbar.LENGTH_LONG);
         snackbar.show();
         textView.requestFocus();

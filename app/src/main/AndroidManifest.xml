@@ -70,8 +70,13 @@
 
         <activity android:name=".views.activity.OrderDetailViewActivity" />
         <activity android:name=".views.activity.AddRecommendedProduct" />
-        <activity android:name=".views.activity.SelectedBidsActivity" />
-        <activity android:name=".views.activity.SelectedBidInfoActivity"></activity>
+        <activity android:name=".views.activity.SellerNotificationActivity" />
+        <activity android:name=".views.activity.SelectedBidInfoActivity" />
+        <activity android:name=".views.activity.RegistrationActivity" />
+        <activity android:name=".views.activity.OTPValidationActivity" />
+        <activity android:name=".views.activity.UpdateSellerContactActivity" />
+        <activity android:name=".views.activity.SellerFinalRegistrationActivity" />
+        <activity android:name=".views.activity.SellerDetailActivity"></activity>
     </application>
 
 </manifest>
