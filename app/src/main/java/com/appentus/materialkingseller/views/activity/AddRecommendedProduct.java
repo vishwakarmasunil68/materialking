@@ -72,7 +72,7 @@ public class AddRecommendedProduct extends AppCompatActivity implements com.wdul
             }
         });
 
-        et_dod.setText(UtilityFunction.getServerCurrentDate());
+//        et_dod.setText(UtilityFunction.getServerCurrentDate());
 
         btn_add.setOnClickListener(new View.OnClickListener() {
             @Override

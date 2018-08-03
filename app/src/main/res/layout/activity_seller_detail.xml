@@ -6,6 +6,11 @@
     android:orientation="vertical"
     tools:context=".views.activity.SellerDetailActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,263 +28,321 @@
                 android:orientation="vertical"
                 android:padding="7dp">
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="EMAIL *"
-                        android:inputType="textEmailAddress"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
-
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_phone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="MOBILE NUMBER *"
-                        android:inputType="number"
-                        android:maxLength="10"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
-
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_company_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Firm/Company Name *"
-                        android:inputType="textEmailAddress"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
-
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_contact_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Contact Name *"
-                        android:inputType="text"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
-
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_address"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Business Address *"
-                        android:inputType="text"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
-
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_landmark"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Street Address/Landmark (optional)"
-                        android:inputType="text"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
-
-                <Spinner
-                    android:id="@+id/spinner_state"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"></Spinner>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
                     android:orientation="horizontal"
-                    android:weightSum="2">
+                    android:weightSum="3">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:gravity="center">
+                        android:text="Email" />
 
-                        <Spinner
-                            android:id="@+id/spinner_cities"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"></Spinner>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
 
-                    </LinearLayout>
-
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/tv_email"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <android.support.design.widget.TextInputLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/dp_20">
-
-                            <android.support.v7.widget.AppCompatEditText
-                                android:id="@+id/et_pincode"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:background="@android:color/transparent"
-                                android:fontFamily="sans-serif"
-                                android:hint="Pin Code *"
-                                android:inputType="number"
-                                android:padding="@dimen/dp_10"
-                                android:textSize="@dimen/sp_18" />
-                        </android.support.design.widget.TextInputLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2px"
-                            android:layout_alignParentBottom="true"
-                            android:layout_marginLeft="4dp"
-                            android:layout_marginRight="4dp"
-                            android:background="#555555" />
-                    </LinearLayout>
-
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
 
                 </LinearLayout>
 
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_area"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Area (optional)"
-                        android:inputType="text"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
+                        android:layout_weight="1"
+                        android:text="Mobile Number" />
 
-                </android.support.design.widget.TextInputLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
+                    <TextView
+                        android:id="@+id/tv_mobile_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
 
-                <android.support.design.widget.TextInputLayout
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_telephone"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Telephone (optional)"
-                        android:inputType="number"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_weight="1"
+                        android:text="Company Name" />
 
-                <View
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_company_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Contact Name" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_contact_name"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Business Address" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_business_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Street Address" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_street_address"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="State" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_state"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="City" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_city"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Pincode" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_pincode"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Area" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_area"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Telephone" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_telephone"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -301,9 +364,20 @@
                         android:id="@+id/tv_serve_city"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="+ Add" />
+                        android:text="+ Add"
+                        android:visibility="gone"/>
 
                 </LinearLayout>
+
+                <com.appentus.materialkingseller.helper.AdjustableLayout
+                    android:id="@+id/container_serve"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginTop="5dp">
+
+
+                </com.appentus.materialkingseller.helper.AdjustableLayout>
 
                 <View
                     android:layout_width="match_parent"
@@ -312,17 +386,6 @@
                     android:layout_marginRight="4dp"
                     android:layout_marginTop="@dimen/dp_10"
                     android:background="#555555" />
-
-                <com.appentus.materialkingseller.helper.AdjustableLayout
-                    android:id="@+id/container_serve"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
-
-
-                </com.appentus.materialkingseller.helper.AdjustableLayout>
-
-
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -344,55 +407,147 @@
                     android:layout_marginLeft="4dp"
                     android:layout_marginRight="4dp"
                     android:background="#555555" />
-
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_registration_no"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Business Registration no. (optional) "
-                        android:inputType="number"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_weight="1"
+                        android:text="Business Registration Number" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
 
-                <android.support.design.widget.TextInputLayout
+                    <TextView
+                        android:id="@+id/tv_busiess_registration_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_quantity"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Min. Order Value/Quantity: (optional)"
+                        android:layout_weight="1"
+                        android:text="Minumum Quantity Order" />
 
-                        android:inputType="number"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
 
-                <View
+                    <TextView
+                        android:id="@+id/tv_minimum_quantity"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Specialities" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_specialities"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Certificates" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_certificates"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="GST number" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=":-" />
+
+                    <TextView
+                        android:id="@+id/tv_gst_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -417,7 +572,7 @@
                                 android:background="@android:color/transparent"
                                 android:focusable="false"
                                 android:fontFamily="sans-serif"
-                                android:hint="Latest Bill Picture*"
+                                android:hint="Latest Bill Picture"
                                 android:inputType="text"
                                 android:padding="@dimen/dp_10"
                                 android:textSize="@dimen/sp_18" />
@@ -451,76 +606,34 @@
 
                 </LinearLayout>
 
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_annual_turnover"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Annual turnover"
-                        android:inputType="numberDecimal"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
-
-                <android.support.design.widget.TextInputLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:minHeight="45dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
 
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_specialities"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Specialities"
-                        android:inputType="text"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
+                        android:layout_weight="1"
+                        android:text="Annual Turnover" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_10">
-
-                    <android.support.v7.widget.AppCompatEditText
-                        android:id="@+id/et_certification"
-                        android:layout_width="match_parent"
+                    <TextView
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        android:fontFamily="sans-serif"
-                        android:hint="Certification/Awards:"
-                        android:inputType="text"
-                        android:padding="@dimen/dp_10"
-                        android:textSize="@dimen/sp_18" />
-                </android.support.design.widget.TextInputLayout>
+                        android:text=":-" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_marginLeft="4dp"
-                    android:layout_marginRight="4dp"
-                    android:background="#555555" />
+                    <TextView
+                        android:id="@+id/tv_annual_turnover"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        android:paddingLeft="10dp" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

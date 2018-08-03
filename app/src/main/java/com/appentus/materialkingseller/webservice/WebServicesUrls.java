@@ -6,7 +6,7 @@ package com.appentus.materialkingseller.webservice;
 
 public class WebServicesUrls {
         public static final String BASE_URL="http://appentus.me/mk/appiqo_bid/";
-//    public static final String BASE_URL = "http://192.168.1.5/mk/appiqo_bid/";
+//    public static final String BASE_URL = "http://192.168.1.4/mk/appiqo_bid/";
 
     //    public static String IMAGEBASEURL = "http://appentus.me/mk/appiqo_bid/uploads/";
     public static String IMAGEBASEURL = BASE_URL + "uploads/";

@@ -180,7 +180,7 @@ public class OrderDetailViewActivity extends AppCompatActivity {
     }
 
     public void saveBid(boolean is_partial, boolean is_recommended) {
-        printData(is_partial, is_recommended);
+//        printData(is_partial, is_recommended);
         try {
             MultipartEntity reqEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
 
@@ -188,6 +188,7 @@ public class OrderDetailViewActivity extends AppCompatActivity {
             reqEntity.addPart("seller_id", new StringBody(Constants.userPOJO.getId()));
             reqEntity.addPart("order_id", new StringBody(orderPOJO.getOrderId()));
             reqEntity.addPart("delivered_on", new StringBody(UtilityFunction.getServerCurrentDate()));
+            reqEntity.addPart("user_id", new StringBody(orderPOJO.getUserId()));
 
             if (is_recommended) {
                 reqEntity.addPart("seller_status", new StringBody("Recommended"));
@@ -223,6 +224,7 @@ public class OrderDetailViewActivity extends AppCompatActivity {
                             reqEntity.addPart("bid_products[" + count + "][rbp][" + recomment_count + "][price]", new StringBody(itemRecommendationPOJO.getPrice()));
                             reqEntity.addPart("bid_products[" + count + "][rbp][" + recomment_count + "][confirm_status]", new StringBody("1"));
                             reqEntity.addPart("bid_products[" + count + "][rbp][" + recomment_count + "][delivered_on]", new StringBody(itemRecommendationPOJO.getDelivered_on()));
+                            reqEntity.addPart("bid_products[" + count + "][rbp][" + recomment_count + "][shipping_charge]", new StringBody(itemRecommendationPOJO.getShipping_price()));
                             recomment_count++;
                         }
                     } else {
