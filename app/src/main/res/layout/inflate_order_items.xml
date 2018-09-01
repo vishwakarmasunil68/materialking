@@ -46,12 +46,6 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tv_product_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Product Number" />
-
-            <TextView
                 android:id="@+id/tv_product_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -74,6 +68,65 @@
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_brand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Brand"
+                    android:textStyle="bold"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+                <TextView
+                    android:id="@+id/tv_brand"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Brand"
+                    android:layout_marginLeft="7dp"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Size"
+                    android:textStyle="bold"
+                    android:textColor="#000000"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+                <TextView
+                    android:id="@+id/tv_size"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:layout_height="wrap_content"
+                    android:text="Size"
+                    android:layout_marginLeft="7dp"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

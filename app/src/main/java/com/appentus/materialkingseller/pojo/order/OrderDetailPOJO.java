@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.appentus.materialkingseller.adapters.ItemRecommendationAdapter;
 import com.appentus.materialkingseller.pojo.ItemRecommendationPOJO;
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -47,6 +48,12 @@ public class OrderDetailPOJO implements Serializable {
     private String colorCode;
     @SerializedName("product_size_image")
     private String productSizeImage;
+    @Expose
+    @SerializedName("size_detail")
+    private SizePOJO size_detail;
+    @Expose
+    @SerializedName("brand_detail")
+    private BrandPOJO brand_detail;
     private List<ItemRecommendationPOJO> itemRecommendationPOJOS=new ArrayList<>();
     private int quantity_available;
     private String deliverd_on="";
@@ -254,5 +261,21 @@ public class OrderDetailPOJO implements Serializable {
 
     public void setShipping_charge(String shipping_charge) {
         this.shipping_charge = shipping_charge;
+    }
+
+    public SizePOJO getSize_detail() {
+        return size_detail;
+    }
+
+    public void setSize_detail(SizePOJO size_detail) {
+        this.size_detail = size_detail;
+    }
+
+    public BrandPOJO getBrand_detail() {
+        return brand_detail;
+    }
+
+    public void setBrand_detail(BrandPOJO brand_detail) {
+        this.brand_detail = brand_detail;
     }
 }

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/dp_10">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tab_unselected_indicator_background"
+        android:orientation="horizontal"
+        android:padding="@dimen/dp_05">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:padding="@dimen/dp_05">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/iv_product_image"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        android:src="@drawable/ic_default_category"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:orientation="vertical">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_view_recommended_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Product 1(Recommended)"
+                            android:textColor="@color/colorWhite"
+                            android:textSize="@dimen/sp_18"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/ll_brand"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Brand"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":" />
+
+                            <TextView
+                                android:id="@+id/tv_brand"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:layout_weight="2"
+                                android:text="Brand"
+                                android:textColor="#FFFFFF" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_size"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="3">
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="Size"
+                                android:textColor="#FFFFFF"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=":" />
+
+                            <TextView
+                                android:id="@+id/tv_size"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="7dp"
+                                android:layout_weight="2"
+                                android:text="Size"
+                                android:textColor="#FFFFFF" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_replacement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="We have replacement of the same"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_recommend_products"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

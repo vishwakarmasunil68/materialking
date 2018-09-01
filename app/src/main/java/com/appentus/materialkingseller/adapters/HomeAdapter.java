@@ -8,8 +8,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import com.appentus.materialkingseller.R;
+import com.appentus.materialkingseller.Util.Constants;
 import com.appentus.materialkingseller.model.HomeModel;
 import com.appentus.materialkingseller.pojo.order.OrderPOJO;
+import com.appentus.materialkingseller.views.activity.BidViewActivity;
 import com.appentus.materialkingseller.views.activity.MainActivity;
 import com.appentus.materialkingseller.views.activity.OrderDetailViewActivity;
 import com.appentus.materialkingseller.views.fragment.OrderDetailViewFragment;
@@ -32,13 +34,10 @@ import butterknife.ButterKnife;
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-
-    String SELF, fontSize, today;
-
+    String today;
     Context context;
     List<OrderPOJO> partialOrderModels;
-
-
+    String type="BID NOW";
 
     public HomeAdapter(Context context, List<OrderPOJO> partialOrderModels) {
         this.context = context;
@@ -48,11 +47,13 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     }
 
+    public void setType(String type){
+        this.type=type;
+    }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_screen_item, parent, false);
-
-
         return new ViewHolder(view);
     }
 
@@ -74,20 +75,24 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             holder1.bidNowTv.setVisibility(View.GONE);
         }
 
+        holder1.bidNowTv.setText(type);
+
         holder1.bidNowTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(context, OrderDetailViewActivity.class);
-                intent.putExtra("order",partialOrderModels.get(position));
-                context.startActivity(intent);
+                if(type.equalsIgnoreCase("view")){
+                    Intent intent = new Intent(context, BidViewActivity.class);
+                    intent.putExtra("order_id", partialOrderModels.get(position).getOrderId());
+                    intent.putExtra("seller_id", Constants.userPOJO.getId());
+                    context.startActivity(intent);
+                }else {
+                    Intent intent = new Intent(context, OrderDetailViewActivity.class);
+                    intent.putExtra("order", partialOrderModels.get(position));
+                    context.startActivity(intent);
+                }
             }
         });
-
-
-
     }
-
-
 
     public String getTimeStamp(String stamp) {
 

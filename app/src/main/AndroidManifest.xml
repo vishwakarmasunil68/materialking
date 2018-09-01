@@ -76,7 +76,9 @@
         <activity android:name=".views.activity.OTPValidationActivity" />
         <activity android:name=".views.activity.UpdateSellerContactActivity" />
         <activity android:name=".views.activity.SellerFinalRegistrationActivity" />
-        <activity android:name=".views.activity.SellerDetailActivity"></activity>
+        <activity android:name=".views.activity.SellerDetailActivity" />
+        <activity android:name=".views.activity.BidItemPlacedActivity" />
+        <activity android:name=".views.activity.BidViewActivity"></activity>
     </application>
 
 </manifest>

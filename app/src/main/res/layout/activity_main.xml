@@ -24,7 +24,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-
                 <LinearLayout
                     android:id="@+id/mainLayout"
                     android:layout_width="match_parent"
@@ -36,6 +35,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/sp_16"
+                        android:visibility="gone"
                         android:orientation="horizontal">
 
 

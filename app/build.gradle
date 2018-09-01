@@ -91,5 +91,6 @@ dependencies {
     }
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
     compile 'com.wdullaer:materialdatetimepicker:3.6.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }
 apply plugin: 'com.google.gms.google-services'

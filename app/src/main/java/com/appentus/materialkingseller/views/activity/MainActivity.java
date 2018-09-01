@@ -61,14 +61,8 @@ public class MainActivity extends AppCompatActivity {
     ProgressView progressView;
     ApiInterface apiInterface;
 
-
     List<OrderPOJO> orderPOJOS = new ArrayList<>();
-
-
-    /* @BindView(R.id.anim)
-     ImageView anim;
-     @BindView(R.id.btn_signup_seller_fourth_home)
-     AppCompatButton btnSignupSellerFourthHome;*/
+    int selected_position=-1;
     public static HomeAdapter mAdapter;
 
     @Override
@@ -79,26 +73,17 @@ public class MainActivity extends AppCompatActivity {
         apiInterface = ApiClient.getClient().create(ApiInterface.class);
         ButterKnife.bind(this);
 
-        /*ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(anim, PropertyValuesHolder.ofFloat("scaleX", 1.2f), PropertyValuesHolder.ofFloat("scaleY", 1.2f));
-        scaleDown.setDuration(400);
-        scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
-        scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
-        scaleDown.start();
-        MyApplication.writeBooleanPref(PrefsData.PREF_LOGINSTATUS, true);
-        btnSignupSellerFourthHome.setVisibility(View.GONE);*/
-
-
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new HomeAdapter(this, orderPOJOS);
         recyclerView.setAdapter(mAdapter);
-
 
         spinnerOrders.setSelection(0);
 
         spinnerOrders.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                resendOtpConnectApi(position);
+                selected_position=position;
+                checkBids(position);
             }
 
             @Override
@@ -131,34 +116,35 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(selected_position!=-1) {
+            checkBids(selected_position);
+        }
+    }
 
-
-
-    private void resendOtpConnectApi(int position) {
-//        progressView.showLoader();
-//        mainLayout.setVisibility(View.GONE);
-        Log.e("i am called", "gfhgf");
-        String userID = MyApplication.readStringPref(PrefsData.PREF_USERID);
-        String type = "";
+    String type="";
+    private void checkBids(int position) {
         String url = "";
         switch (position) {
             case 0:
-                type = "recent";
+                type="BID NOW";
                 url = WebServicesUrls.RECENT_ORDERS;
                 break;
 
             case 1:
-                type = "complete";
+                type="View";
                 url = WebServicesUrls.COMPLETE_ORDERS;
                 break;
 
             case 2:
-                type = "applied";
+                type="View";
                 url = WebServicesUrls.APPLIED_BID_ORDERS;
                 break;
 
             case 3:
-                type = "cancel";
+                type="View";
                 url = WebServicesUrls.CLOSED_ORDER;
                 break;
 
@@ -177,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
                         orderPOJOS.addAll(responseListPOJO.getResultList());
                     }
                     mAdapter.notifyDataSetChanged();
+                    mAdapter.setType(type);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

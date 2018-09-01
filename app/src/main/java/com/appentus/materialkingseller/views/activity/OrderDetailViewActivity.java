@@ -207,6 +207,11 @@ public class OrderDetailViewActivity extends AppCompatActivity {
                     reqEntity.addPart("bid_products[" + count + "]" + "[name]", new StringBody(orderDetailPOJO.getProductName()));
                     reqEntity.addPart("bid_products[" + count + "]" + "[description]", new StringBody(orderDetailPOJO.getProductDescription()));
                     reqEntity.addPart("bid_products[" + count + "]" + "[image]", new StringBody(orderDetailPOJO.getProductImage()));
+                    reqEntity.addPart("bid_products[" + count + "]" + "[size_image]", new StringBody(orderDetailPOJO.getProductSizeImage()));
+                    reqEntity.addPart("bid_products[" + count + "]" + "[variation_id]", new StringBody(orderDetailPOJO.getVariationId()));
+                    reqEntity.addPart("bid_products[" + count + "]" + "[product_variation_id]", new StringBody(orderDetailPOJO.getProductVariationId()));
+                    reqEntity.addPart("bid_products[" + count + "]" + "[brand_name]", new StringBody(orderDetailPOJO.getBrandName()));
+                    reqEntity.addPart("bid_products[" + count + "]" + "[size_name]", new StringBody(orderDetailPOJO.getSizeName()));
                     if (orderDetailPOJO.isIs_recommendation()) {
                         reqEntity.addPart("bid_products[" + count + "]" + "[recommend_yes_no]", new StringBody("1"));
                         int recomment_count = 0;

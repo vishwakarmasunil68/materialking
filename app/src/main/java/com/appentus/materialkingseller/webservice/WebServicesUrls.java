@@ -5,7 +5,8 @@ package com.appentus.materialkingseller.webservice;
  */
 
 public class WebServicesUrls {
-        public static final String BASE_URL="http://appentus.me/mk/appiqo_bid/";
+
+    public static final String BASE_URL = "http://appentus.me/mk/appiqo_bid/";
 //    public static final String BASE_URL = "http://192.168.1.4/mk/appiqo_bid/";
 
     //    public static String IMAGEBASEURL = "http://appentus.me/mk/appiqo_bid/uploads/";
@@ -22,7 +23,7 @@ public class WebServicesUrls {
     public static final String RESEND_OTP = BASE_URL + "SellerRegistration/resendOTP";
 
 
-//    public static final String LOGIN_URL = BASE_URL + "webservice_v1/login";
+    //    public static final String LOGIN_URL = BASE_URL + "webservice_v1/login";
     public static final String LOGIN_URL = BASE_URL + "SellerRegistration/loginSeller";
     public static final String RECENT_ORDERS = BASE_URL + "webservice_v2/get_buyer_recent_order_for_seller";
     public static final String COMPLETE_ORDERS = BASE_URL + "webservice_v2/get_buyer_completed_order_for_seller";
@@ -35,4 +36,8 @@ public class WebServicesUrls {
     public static final String GET_SELLER_NOTIFICATIONS = BASE_URL + "ProcessOrder/get_seller_notification";
     public static final String GET_NOTIFICATION_DATA = BASE_URL + "ProcessOrder/get_notification";
     public static final String UPDATE_FINAL_ORDER = BASE_URL + "ProcessOrder/updateFinalOrderStatus";
+    public static final String GET_RECOMMENDED_BID = BASE_URL + "webservice_v2/get_recommended_bid";
+    public static final String GET_PRODUCT_BID = BASE_URL + "orderctrl/getProductBids";
+    public static final String GET_RECOMMENDED_BID_INFO = BASE_URL + "webservice_v2/get_recommended_bid_info";
+    public static final String GET_BID_DETAIL = BASE_URL + "webservice_v2/get_seller_bid_detail";
 }

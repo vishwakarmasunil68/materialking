@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ll_recommend_product"
+    android:layout_width="match_parent"
+    android:layout_margin="5dp"
+    android:padding="7dp"
+    android:background="@drawable/tab_unselected_indicator_background"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_recommend_image"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:scaleType="fitXY"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_default_category" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_10"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_gravity="center"
+                    android:text="Offers: 1500 INR"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/sp_16" />
+
+                <!--<CheckBox-->
+                <!--android:id="@+id/check_recommend_selected"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:theme="@style/MyCheckBox" />-->
+
+            </LinearLayout>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_view_complete_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offers: 1500 INR"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_16" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_shipping_charges"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offers: 1500 INR"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_16" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_delivered_in"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offers: 1500 INR"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/sp_16" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

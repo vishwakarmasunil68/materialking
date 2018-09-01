@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -66,7 +67,7 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         Glide.with(context)
-                .load(WebServicesUrls.IMAGEBASEURL + items.get(position).getProductImage())
+                .load(WebServicesUrls.IMAGEBASEURL + items.get(position).getProductSizeImage())
                 .into(holder.iv_product_image);
 
         holder.check_select.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -78,8 +79,24 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
 
         holder.tv_quantity_required.setText(items.get(position).getQtyRequired());
         holder.tv_product_name.setText(items.get(position).getProductName());
-        holder.tv_product_number.setText(items.get(position).getProductNumber());
         holder.tv_product_description.setText(items.get(position).getProductDescription());
+
+//        if (items.get(position).getSize_detail() != null) {
+            holder.ll_size.setVisibility(View.VISIBLE);
+//            holder.tv_size.setText(items.get(position).getSize_detail().getSizeName());
+//        } else {
+//            holder.ll_size.setVisibility(View.GONE);
+//        }
+//        if (items.get(position).getBrand_detail() != null) {
+            holder.ll_brand.setVisibility(View.VISIBLE);
+//            holder.tv_brand.setText(items.get(position).getBrand_detail().getBrandName());
+//        } else {
+//            holder.ll_brand.setVisibility(View.GONE);
+//        }
+
+        holder.tv_brand.setText(items.get(position).getBrandName());
+        holder.tv_size.setText(items.get(position).getSizeName());
+
 
         if(items.get(position).getDeliverd_on().length()>0){
             holder.et_deivered_in.setText(items.get(position).getDeliverd_on());
@@ -261,8 +278,6 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         EditText et_deivered_in;
         @BindView(R.id.tv_product_name)
         TextView tv_product_name;
-        @BindView(R.id.tv_product_number)
-        TextView tv_product_number;
         @BindView(R.id.tv_product_description)
         TextView tv_product_description;
         @BindView(R.id.ll_without_recommend)
@@ -281,6 +296,14 @@ public class OrderItemAdapter extends RecyclerView.Adapter<OrderItemAdapter.View
         EditText et_price;
         @BindView(R.id.et_shipping_charges)
         EditText et_shipping_charges;
+        @BindView(R.id.tv_brand)
+        TextView tv_brand;
+        @BindView(R.id.tv_size)
+        TextView tv_size;
+        @BindView(R.id.ll_brand)
+        LinearLayout ll_brand;
+        @BindView(R.id.ll_size)
+        LinearLayout ll_size;
 
         public ViewHolder(View itemView) {
             super(itemView);
